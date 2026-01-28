@@ -15,9 +15,9 @@ class Deal < ApplicationRecord
   }.freeze
 
   # Associations
-  belongs_to :book
-  belongs_to :publisher, counter_cache: true
-  belongs_to :agent, optional: true
+  belongs_to :book, touch: true
+  belongs_to :publisher, counter_cache: true, touch: true
+  belongs_to :agent, optional: true, touch: true
 
   # Validations
   validates :deal_type, presence: true, inclusion: { in: DEAL_TYPES }

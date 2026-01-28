@@ -2,6 +2,7 @@
 <% parent ||= @parent %>
 <% is_author_parent = parent.is_a?(Author) %>
 
+<% cache [representation, representation.author, representation.agent] do %>
 <%= turbo_frame_tag dom_id(representation) do %>
   <div class="flex items-center justify-between py-3 px-4 border-b border-gray-200 last:border-b-0" data-testid="representation-row">
     <div class="flex items-center min-w-0">
@@ -57,4 +58,5 @@
       <% end %>
     </div>
   </div>
+<% end %>
 <% end %>

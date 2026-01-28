@@ -24,6 +24,7 @@
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <% books.each do |book| %>
+            <% cache book do %>
             <tr data-testid="book-row">
               <td class="px-6 py-4 whitespace-nowrap">
                 <%= link_to book.title, book_path(book), class: "text-sm font-medium text-gray-900 hover:text-blue-600" %>
@@ -45,6 +46,7 @@
                 <%= link_to "Edit", edit_book_path(book), class: "text-gray-600 hover:text-gray-800" %>
               </td>
             </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>

@@ -1,3 +1,4 @@
+<% cache [prospect, prospect.agent, Date.current] do %>
 <tr data-testid="prospect-row">
   <td class="px-6 py-4 whitespace-nowrap">
     <div class="flex items-center">
@@ -57,3 +58,4 @@
     <%= link_to "Edit", edit_prospect_path(prospect), class: "text-gray-600 hover:text-gray-900 ml-3" %>
   </td>
 </tr>
+<% end %>

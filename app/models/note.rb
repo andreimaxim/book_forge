@@ -1,6 +1,6 @@
 class Note < ApplicationRecord
   # Associations
-  belongs_to :notable, polymorphic: true
+  belongs_to :notable, polymorphic: true, touch: true
 
   # Validations
   validates :content, presence: true, length: { minimum: 2 }

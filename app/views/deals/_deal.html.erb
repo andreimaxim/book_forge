@@ -1,3 +1,4 @@
+<% cache [deal, deal.book, deal.publisher, deal.agent] do %>
 <tr data-testid="deal-row">
   <td class="px-6 py-4 whitespace-nowrap">
     <div class="flex items-center">
@@ -38,3 +39,4 @@
     <%= link_to "Edit", edit_deal_path(deal), class: "text-gray-600 hover:text-gray-800" %>
   </td>
 </tr>
+<% end %>

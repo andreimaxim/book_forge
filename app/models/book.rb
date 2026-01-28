@@ -12,7 +12,7 @@ class Book < ApplicationRecord
   ISBN_REGEX = /\A(?:(?:\d[- ]?){9}[\dXx]|(?:97[89][- ]?)?(?:\d[- ]?){9}[\dXx])\z/
 
   # Associations
-  belongs_to :author, counter_cache: true
+  belongs_to :author, counter_cache: true, touch: true
   has_many :deals, dependent: :restrict_with_error
 
   # Validations

@@ -3,8 +3,8 @@ class Representation < ApplicationRecord
   STATUSES = %w[active ended].freeze
 
   # Associations
-  belongs_to :author
-  belongs_to :agent, counter_cache: true
+  belongs_to :author, touch: true
+  belongs_to :agent, counter_cache: true, touch: true
 
   # Validations
   validates :author_id, uniqueness: { scope: :agent_id }
