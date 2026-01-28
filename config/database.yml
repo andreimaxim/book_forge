@@ -29,9 +29,6 @@ development:
 test:
   <<: *default
   database: bookforge_test
-  host: <%= ENV.fetch("PGHOST") { "localhost" } %>
-  username: <%= ENV.fetch("PGUSER") { "bookforge" } %>
-  password: <%= ENV.fetch("PGPASSWORD") { "bookforge" } %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -60,18 +57,18 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
+  primary:
     <<: *default
     database: bookforge_production
   cache:
-    <<: *primary_production
+    <<: *default
     database: bookforge_production_cache
     migrations_paths: db/cache_migrate
   queue:
-    <<: *primary_production
+    <<: *default
     database: bookforge_production_queue
     migrations_paths: db/queue_migrate
   cable:
-    <<: *primary_production
+    <<: *default
     database: bookforge_production_cable
     migrations_paths: db/cable_migrate

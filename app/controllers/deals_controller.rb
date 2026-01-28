@@ -21,7 +21,7 @@ class DealsController < ApplicationController
 
     @deals = @deals.order(offer_date: :desc)
 
-    @pipeline_view = params[:view] == "pipeline"
+    @view_mode = params[:view].presence || "list"
   end
 
   def show

@@ -2,10 +2,19 @@
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-gray-900">Deals</h1>
     <div class="flex gap-2">
-      <% if @pipeline_view %>
-        <%= secondary_button "List View", url: deals_path %>
-      <% else %>
-        <%= secondary_button "Pipeline View", url: deals_path(view: "pipeline") %>
+      <%= link_to deals_path(view: "list", status: params[:status], deal_type: params[:deal_type], publisher_id: params[:publisher_id], agent_id: params[:agent_id], start_date: params[:start_date], end_date: params[:end_date], search: params[:search]),
+        class: "p-2 rounded-md #{@view_mode == 'list' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}",
+        title: "List view" do %>
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+        </svg>
+      <% end %>
+      <%= link_to deals_path(view: "pipeline", status: params[:status], deal_type: params[:deal_type], publisher_id: params[:publisher_id], agent_id: params[:agent_id], start_date: params[:start_date], end_date: params[:end_date], search: params[:search]),
+        class: "p-2 rounded-md #{@view_mode == 'pipeline' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}",
+        title: "Pipeline view" do %>
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+        </svg>
       <% end %>
       <%= primary_button "New Deal", url: new_deal_path %>
     </div>
@@ -13,7 +22,7 @@
 
   <%= render "filters" %>
 
-  <% if @pipeline_view %>
+  <% if @view_mode == "pipeline" %>
     <%= render "pipeline", deals: @deals %>
   <% else %>
     <div class="bg-white rounded-lg shadow overflow-hidden">

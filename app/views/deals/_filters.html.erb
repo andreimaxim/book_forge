@@ -1,6 +1,6 @@
 <div class="mb-6 bg-white rounded-lg shadow p-4">
   <%= form_with url: deals_path, method: :get, class: "flex flex-wrap gap-4 items-end" do |form| %>
-    <% if @pipeline_view %>
+    <% if @view_mode == "pipeline" %>
       <input type="hidden" name="view" value="pipeline">
     <% end %>
 
@@ -53,7 +53,7 @@
     <div class="flex gap-2">
       <%= form.submit "Filter", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
       <% if params[:search].present? || params[:status].present? || params[:deal_type].present? || params[:publisher_id].present? || params[:start_date].present? || params[:end_date].present? %>
-        <%= link_to "Clear", @pipeline_view ? deals_path(view: "pipeline") : deals_path, class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50" %>
+        <%= link_to "Clear", @view_mode == "pipeline" ? deals_path(view: "pipeline") : deals_path, class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50" %>
       <% end %>
     </div>
   <% end %>

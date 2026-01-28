@@ -9,12 +9,13 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_select "[data-testid='book-row']", Book.count
   end
 
-  test "displays books in grid view" do
-    get books_path(view: "grid")
+  test "displays books in pipeline view" do
+    get books_path(view: "pipeline")
 
     assert_response :ok
-    assert_select "[data-testid='books-grid']"
-    assert_select "[data-testid='book-card']", Book.count
+    Book::STATUSES.each do |status|
+      assert_select "[data-testid='pipeline-status-#{status}']"
+    end
   end
 
   test "displays books in list view" do
