@@ -1,7 +1,7 @@
-<div class="mb-4 flex gap-4 items-center">
+<div class="mb-4 flex flex-wrap gap-4 items-center">
   <span class="text-sm text-gray-500">Filter by:</span>
 
-  <div class="flex gap-2">
+  <div class="flex gap-2 flex-wrap">
     <% Author::STATUSES.each do |status| %>
       <%= link_to status.humanize,
         authors_path(status: status, genre: params[:genre], search: params[:search]),
@@ -12,7 +12,7 @@
     <% if params[:status].present? %>
       <%= link_to "Clear",
         authors_path(genre: params[:genre], search: params[:search]),
-        class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200",
+        class: "px-3 py-1 rounded-full text-sm bg-red-100 text-red-700 hover:bg-red-200",
         data: { turbo_frame: "authors_list" } %>
     <% end %>
   </div>
@@ -31,7 +31,7 @@
       <% if params[:genre].present? %>
         <%= link_to "Clear",
           authors_path(status: params[:status], search: params[:search]),
-          class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200",
+          class: "px-3 py-1 rounded-full text-sm bg-red-100 text-red-700 hover:bg-red-200",
           data: { turbo_frame: "authors_list" } %>
       <% end %>
     </div>

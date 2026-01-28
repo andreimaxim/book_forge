@@ -13,7 +13,7 @@
     <% if params[:status].present? %>
       <%= link_to "Clear",
         books_path(genre: params[:genre], author_id: params[:author_id], search: params[:search], view: params[:view]),
-        class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200" %>
+        class: "px-3 py-1 rounded-full text-sm bg-red-100 text-red-700 hover:bg-red-200" %>
     <% end %>
   </div>
 
@@ -32,7 +32,7 @@
       <% if params[:genre].present? %>
         <%= link_to "Clear",
           books_path(status: params[:status], author_id: params[:author_id], search: params[:search], view: params[:view]),
-          class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200" %>
+          class: "px-3 py-1 rounded-full text-sm bg-red-100 text-red-700 hover:bg-red-200" %>
       <% end %>
     </div>
   <% end %>
@@ -48,7 +48,7 @@
         </span>
         <%= link_to "Clear",
           books_path(status: params[:status], genre: params[:genre], search: params[:search], view: params[:view]),
-          class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200" %>
+          class: "px-3 py-1 rounded-full text-sm bg-red-100 text-red-700 hover:bg-red-200" %>
       <% end %>
     </div>
   <% end %>

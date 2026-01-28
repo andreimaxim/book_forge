@@ -4,10 +4,9 @@
     <%= primary_button "New Author", url: new_author_path, data: { turbo_frame: "modal" } %>
   </div>
 
+  <%= turbo_frame_tag "authors_list" do %>
   <%= render "search_form" %>
   <%= render "filters" %>
-
-  <%= turbo_frame_tag "authors_list" do %>
     <div class="bg-white rounded-lg shadow overflow-hidden">
       <% if @authors.any? %>
         <table class="min-w-full divide-y divide-gray-200">

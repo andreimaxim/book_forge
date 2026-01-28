@@ -13,7 +13,7 @@
     <% if params[:size].present? %>
       <%= link_to "Clear",
         publishers_path(status: params[:status], search: params[:search]),
-        class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200" %>
+        class: "px-3 py-1 rounded-full text-sm bg-red-100 text-red-700 hover:bg-red-200" %>
     <% end %>
   </div>
 
@@ -31,7 +31,7 @@
     <% if params[:status].present? %>
       <%= link_to "Clear",
         publishers_path(size: params[:size], search: params[:search]),
-        class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200" %>
+        class: "px-3 py-1 rounded-full text-sm bg-red-100 text-red-700 hover:bg-red-200" %>
     <% end %>
   </div>
 </div>
