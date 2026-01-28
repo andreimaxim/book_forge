@@ -1,0 +1,39 @@
+<tr data-testid="publisher-row" id="<%= dom_id(publisher) %>">
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="flex items-center">
+      <div class="flex-shrink-0 h-10 w-10">
+        <div class="h-10 w-10 rounded-full <%= publisher.big_five? ? 'bg-purple-100' : 'bg-green-100' %> flex items-center justify-center">
+          <span class="text-sm font-medium <%= publisher.big_five? ? 'text-purple-700' : 'text-green-700' %>"><%= publisher.name.first(2).upcase %></span>
+        </div>
+      </div>
+      <div class="ml-4">
+        <div class="text-sm font-medium text-gray-900">
+          <%= link_to publisher.display_name, publisher, class: "hover:text-blue-600" %>
+        </div>
+        <% if publisher.city.present? || publisher.country.present? %>
+          <div class="text-xs text-gray-500">
+            <%= [publisher.city, publisher.country].compact_blank.join(", ") %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm text-gray-900"><%= publisher.contact_name || "-" %></div>
+    <div class="text-sm text-gray-500"><%= publisher.contact_email || "-" %></div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <% if publisher.size.present? %>
+      <%= badge publisher.size.humanize.titleize, status: publisher.big_five? ? :info : :default %>
+    <% else %>
+      <span class="text-sm text-gray-500">-</span>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <%= badge publisher.status.humanize, status: publisher.status.to_sym %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+    <%= link_to "Edit", edit_publisher_path(publisher), class: "text-blue-600 hover:text-blue-900 mr-3" %>
+    <%= link_to "Delete", publisher_path(publisher), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete #{publisher.display_name}?" }, class: "text-red-600 hover:text-red-900" %>
+  </td>
+</tr>

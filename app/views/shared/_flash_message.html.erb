@@ -1,0 +1,30 @@
+<%
+  testid = type == 'notice' ? 'flash-notice' : (type == 'alert' ? 'flash-alert' : "flash-#{type}")
+  colors = case type.to_s
+           when 'notice'
+             'bg-green-50 border-green-200 text-green-800'
+           when 'alert'
+             'bg-red-50 border-red-200 text-red-800'
+           else
+             'bg-blue-50 border-blue-200 text-blue-800'
+           end
+%>
+<div
+  data-testid="<%= testid %>"
+  data-controller="flash"
+  class="flex items-center gap-3 px-4 py-3 rounded-lg border shadow-sm min-w-64 <%= colors %>"
+>
+  <span class="flex-1"><%= message %></span>
+  <button
+    type="button"
+    data-testid="flash-dismiss"
+    data-action="click->flash#dismiss"
+    class="flex-shrink-0 p-1 rounded hover:bg-black/10 transition-colors"
+    aria-label="Dismiss"
+    style="min-width: 28px; min-height: 28px;"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+</div>

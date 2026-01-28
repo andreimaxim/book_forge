@@ -1,0 +1,190 @@
+# Published books
+pride_and_prejudice:
+  title: "Pride and Prejudice"
+  subtitle: "A Novel"
+  author: jane_austen
+  genre: Romance
+  subgenre: Regency Romance
+  word_count: 122000
+  synopsis: "A witty story of love and society in Georgian England."
+  description: "The story follows Elizabeth Bennet as she deals with issues of manners, upbringing, morality, education, and marriage."
+  status: published
+  isbn: "978-0-14-143951-8"
+  publication_date: 1813-01-28
+  list_price: 14.99
+  format: paperback
+  page_count: 432
+  cover_image_url: https://example.com/covers/pride_prejudice.jpg
+  notes: "Classic romance novel"
+
+sense_and_sensibility:
+  title: "Sense and Sensibility"
+  author: jane_austen
+  genre: Romance
+  subgenre: Regency Romance
+  word_count: 119000
+  synopsis: "A story of two sisters with contrasting temperaments."
+  status: published
+  isbn: "978-0-14-143966-2"
+  publication_date: 1811-10-30
+  list_price: 13.99
+  format: paperback
+  page_count: 409
+  notes:
+
+the_shining:
+  title: "The Shining"
+  author: stephen_king
+  genre: Horror
+  subgenre: Psychological Horror
+  word_count: 160000
+  synopsis: "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence."
+  status: published
+  isbn: "978-0-385-12167-5"
+  publication_date: 1977-01-28
+  list_price: 17.99
+  format: hardcover
+  page_count: 447
+
+it:
+  title: "It"
+  author: stephen_king
+  genre: Horror
+  subgenre: Supernatural Horror
+  word_count: 445000
+  synopsis: "Seven adults return to their hometown to confront a nightmare they thought they had defeated decades ago."
+  status: published
+  isbn: "978-1-5011-4217-4"
+  publication_date: 1986-09-15
+  list_price: 19.99
+  format: paperback
+  page_count: 1138
+
+murder_on_orient_express:
+  title: "Murder on the Orient Express"
+  author: agatha_christie
+  genre: Mystery
+  subgenre: Detective Fiction
+  word_count: 66000
+  synopsis: "Hercule Poirot investigates a murder aboard the famous train."
+  status: published
+  isbn: "978-0-06-207350-8"
+  publication_date: 1934-01-01
+  list_price: 15.99
+  format: paperback
+  page_count: 256
+
+# Manuscript (not yet published)
+manuscript_in_progress:
+  title: "The Untold Story"
+  author: jane_austen
+  genre: Romance
+  word_count: 45000
+  synopsis: "A new romance set in the English countryside."
+  status: manuscript
+  isbn:
+  publication_date:
+  list_price:
+  format:
+  page_count:
+  notes: "Work in progress"
+
+# Book under review
+book_under_review:
+  title: "Dark Corners"
+  author: stephen_king
+  genre: Horror
+  word_count: 95000
+  synopsis: "A chilling tale of a haunted small town."
+  status: under_review
+  isbn:
+  publication_date:
+  list_price:
+  format:
+  page_count:
+  notes: "Submitted to publisher for review"
+
+# Book that has been submitted
+submitted_book:
+  title: "The Last Mystery"
+  author: agatha_christie
+  genre: Mystery
+  word_count: 72000
+  synopsis: "Poirot's final case."
+  status: submitted
+  isbn:
+  publication_date:
+  list_price:
+  format:
+  page_count:
+  notes: "Awaiting publisher response"
+
+# Accepted book (in production)
+accepted_book:
+  title: "Love in the Time of Steam"
+  author: jane_austen
+  genre: Romance
+  subgenre: Historical Romance
+  word_count: 88000
+  synopsis: "A steampunk-inspired romance."
+  status: accepted
+  isbn:
+  publication_date:
+  list_price:
+  format:
+  page_count:
+
+# Book in production
+book_in_production:
+  title: "Nightmare Alley"
+  author: stephen_king
+  genre: Horror
+  word_count: 110000
+  synopsis: "A carnival of horrors."
+  status: in_production
+  isbn: "978-0-385-99999-9"
+  publication_date: 2027-06-01
+  list_price: 24.99
+  format: hardcover
+  page_count:
+
+# Out of print book
+out_of_print_book:
+  title: "The Forgotten Tale"
+  author: deceased_author
+  genre: Classic
+  word_count: 75000
+  synopsis: "A story from a bygone era."
+  status: out_of_print
+  isbn: "978-0-000-00000-1"
+  publication_date: 1960-05-15
+  list_price:
+  format: hardcover
+  page_count: 280
+
+# Book without word count (for edge case testing)
+book_without_word_count:
+  title: "Untitled Project"
+  author: author_no_email
+  genre: Fiction
+  word_count:
+  synopsis:
+  status: manuscript
+  isbn:
+  publication_date:
+  list_price:
+  format:
+  page_count:
+
+# Book with ISBN-10 format
+book_with_isbn10:
+  title: "Classic Novel"
+  author: mystery_author
+  genre: Mystery
+  word_count: 85000
+  status: published
+  isbn: "0-306-40615-2"
+  publication_date: 1995-03-20
+  list_price: 12.99
+  format: paperback
+  page_count: 320

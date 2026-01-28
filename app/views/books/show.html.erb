@@ -1,0 +1,144 @@
+<div class="w-full">
+  <div class="mb-6">
+    <%= link_to "&larr; Back to Books".html_safe, books_path, class: "text-blue-600 hover:text-blue-800 text-sm" %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="px-6 py-5 border-b border-gray-200">
+      <div class="flex justify-between items-start">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 h-32 w-24 bg-gray-200 rounded flex items-center justify-center">
+            <% if @book.cover_image_url.present? %>
+              <%= image_tag @book.cover_image_url, class: "h-32 w-24 object-cover rounded" %>
+            <% else %>
+              <svg class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            <% end %>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900"><%= @book.title %></h1>
+            <% if @book.subtitle.present? %>
+              <p class="text-lg text-gray-600"><%= @book.subtitle %></p>
+            <% end %>
+            <p class="mt-1 text-gray-600" data-testid="book-author">
+              by <%= link_to @book.author.full_name, @book.author, class: "text-blue-600 hover:text-blue-800" %>
+            </p>
+            <div class="mt-2">
+              <%= badge @book.status.humanize, status: @book.status.to_sym %>
+              <span data-testid="book-status" class="sr-only"><%= @book.status %></span>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <%= secondary_button "Edit", url: edit_book_path(@book) %>
+          <%= danger_button "Delete", url: book_path(@book), confirm: "Are you sure you want to delete #{@book.title}?", data: { turbo_method: :delete } %>
+        </div>
+      </div>
+    </div>
+
+    <%# Status Timeline %>
+    <%= render "status_timeline", book: @book %>
+
+    <div class="px-6 py-5">
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Genre</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @book.genre %></dd>
+        </div>
+
+        <% if @book.subgenre.present? %>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Subgenre</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @book.subgenre %></dd>
+          </div>
+        <% end %>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Word Count</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @book.formatted_word_count || "-" %></dd>
+        </div>
+
+        <% if @book.format.present? %>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Format</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @book.format.humanize %></dd>
+          </div>
+        <% end %>
+
+        <% if @book.page_count.present? %>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Page Count</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @book.page_count %> pages</dd>
+          </div>
+        <% end %>
+
+        <% if @book.isbn.present? %>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">ISBN</dt>
+            <dd class="mt-1 text-sm text-gray-900 font-mono"><%= @book.isbn %></dd>
+          </div>
+        <% end %>
+
+        <% if @book.publication_date.present? %>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Publication Date</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @book.publication_date.strftime("%B %d, %Y") %></dd>
+          </div>
+        <% end %>
+
+        <% if @book.list_price.present? %>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">List Price</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(@book.list_price) %></dd>
+          </div>
+        <% end %>
+
+        <% if @book.days_since_submission.present? %>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Days Since Submission</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @book.days_since_submission %> days</dd>
+          </div>
+        <% end %>
+
+        <% if @book.synopsis.present? %>
+          <div class="sm:col-span-2 lg:col-span-3">
+            <dt class="text-sm font-medium text-gray-500">Synopsis</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @book.synopsis %></dd>
+          </div>
+        <% end %>
+
+        <% if @book.description.present? %>
+          <div class="sm:col-span-2 lg:col-span-3">
+            <dt class="text-sm font-medium text-gray-500">Description</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= simple_format(@book.description) %></dd>
+          </div>
+        <% end %>
+
+        <% if @book.notes.present? %>
+          <div class="sm:col-span-2 lg:col-span-3">
+            <dt class="text-sm font-medium text-gray-500">Notes</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @book.notes %></dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+
+  <%# Tab Navigation for related records %>
+  <div class="mt-6 bg-white rounded-lg shadow overflow-hidden" data-controller="tabs" data-tabs-active-class="border-blue-500 text-blue-600" data-tabs-inactive-class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+    <div class="border-b border-gray-200">
+      <nav class="-mb-px flex" data-testid="book-tabs">
+        <a href="#deals" class="border-b-2 border-blue-500 text-blue-600 py-4 px-6 text-sm font-medium" data-tabs-target="tab" data-action="click->tabs#switch" data-tab="deals">
+          Deals
+        </a>
+      </nav>
+    </div>
+
+    <div>
+      <div data-testid="deals-tab-content" data-tabs-target="panel" data-panel="deals" class="p-6">
+        <%= render "books/deals_tab", book: @book, deals: @deals %>
+      </div>
+    </div>
+  </div>
+</div>

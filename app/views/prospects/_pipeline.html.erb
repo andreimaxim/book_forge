@@ -1,0 +1,60 @@
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+  <% Prospect::STAGES.each do |stage| %>
+    <% next if %w[converted declined].include?(stage) %>
+    <div data-testid="pipeline-stage-<%= stage %>" class="bg-gray-50 rounded-lg p-4">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide"><%= stage.humanize %></h3>
+        <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-600 bg-gray-200 rounded-full">
+          <%= prospects.by_stage(stage).count %>
+        </span>
+      </div>
+      <div class="space-y-3">
+        <% prospects.by_stage(stage).each do |prospect| %>
+          <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex items-start justify-between">
+              <div class="flex-1 min-w-0">
+                <%= link_to prospect.full_name, prospect_path(prospect), class: "text-sm font-medium text-gray-900 hover:text-blue-600 block truncate" %>
+                <% if prospect.project_title.present? %>
+                  <p class="text-xs text-gray-500 truncate mt-1"><%= prospect.project_title %></p>
+                <% end %>
+              </div>
+            </div>
+            <div class="mt-3 flex items-center justify-between">
+              <% if prospect.source.present? %>
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600">
+                  <%= prospect.source.humanize %>
+                </span>
+              <% else %>
+                <span></span>
+              <% end %>
+              <% if prospect.agent %>
+                <span class="text-xs text-gray-500" title="<%= prospect.agent.full_name %>">
+                  <%= prospect.agent.first_name[0] %><%= prospect.agent.last_name[0] %>
+                </span>
+              <% end %>
+            </div>
+            <% if prospect.follow_up_date %>
+              <div class="mt-2 pt-2 border-t border-gray-100">
+                <% if prospect.follow_up_date < Date.today %>
+                  <span class="text-xs text-red-600">Overdue: <%= prospect.follow_up_date.strftime("%b %d") %></span>
+                <% elsif prospect.follow_up_date == Date.today %>
+                  <span class="text-xs text-yellow-600">Follow up today</span>
+                <% else %>
+                  <span class="text-xs text-gray-500">Follow up: <%= prospect.follow_up_date.strftime("%b %d") %></span>
+                <% end %>
+              </div>
+            <% end %>
+            <div class="mt-2 text-xs text-gray-400">
+              <%= prospect.days_in_current_stage %> days in stage
+            </div>
+          </div>
+        <% end %>
+        <% if prospects.by_stage(stage).empty? %>
+          <div class="text-center py-4 text-sm text-gray-400">
+            No prospects
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

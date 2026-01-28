@@ -1,0 +1,116 @@
+# Activity for Author creation
+author_created:
+  trackable_type: Author
+  trackable_id: 1
+  action: created
+  field_changed:
+  old_value:
+  new_value:
+  description: "Author Jane Austen was created"
+  metadata: {}
+  created_at: <%= 3.days.ago.to_fs(:db) %>
+  updated_at: <%= 3.days.ago.to_fs(:db) %>
+
+# Activity for Author status update
+author_status_changed:
+  trackable_type: Author
+  trackable_id: 1
+  action: status_changed
+  field_changed: status
+  old_value: active
+  new_value: inactive
+  description: "Status changed from active to inactive"
+  metadata: {}
+  created_at: <%= 2.days.ago.to_fs(:db) %>
+  updated_at: <%= 2.days.ago.to_fs(:db) %>
+
+# Activity for Book field change
+book_field_changed:
+  trackable_type: Book
+  trackable_id: 1
+  action: field_changed
+  field_changed: word_count
+  old_value: "100000"
+  new_value: "120000"
+  description: "Word count updated from 100000 to 120000"
+  metadata: {}
+  created_at: <%= 1.day.ago.to_fs(:db) %>
+  updated_at: <%= 1.day.ago.to_fs(:db) %>
+
+# Activity for Deal creation
+deal_created:
+  trackable_type: Deal
+  trackable_id: 1
+  action: deal_created
+  field_changed:
+  old_value:
+  new_value:
+  description: "Deal was created with Penguin Books"
+  metadata: '{"publisher_name": "Penguin Books", "advance": 50000}'
+  created_at: <%= 12.hours.ago.to_fs(:db) %>
+  updated_at: <%= 12.hours.ago.to_fs(:db) %>
+
+# Activity for Note addition
+note_added:
+  trackable_type: Author
+  trackable_id: 1
+  action: note_added
+  field_changed:
+  old_value:
+  new_value: "Follow up with author about manuscript"
+  description: "Note was added"
+  metadata: '{"note_preview": "Follow up with author..."}'
+  created_at: <%= 6.hours.ago.to_fs(:db) %>
+  updated_at: <%= 6.hours.ago.to_fs(:db) %>
+
+# Activity for Representation added
+representation_added:
+  trackable_type: Author
+  trackable_id: 2
+  action: representation_added
+  field_changed:
+  old_value:
+  new_value:
+  description: "Agent John Smith now represents this author"
+  metadata: '{"agent_name": "John Smith"}'
+  created_at: <%= 1.hour.ago.to_fs(:db) %>
+  updated_at: <%= 1.hour.ago.to_fs(:db) %>
+
+# Activity for Update (general)
+book_updated:
+  trackable_type: Book
+  trackable_id: 2
+  action: updated
+  field_changed: title
+  old_value: "Old Title"
+  new_value: "New Title"
+  description: "Title was updated"
+  metadata: {}
+  created_at: <%= 30.minutes.ago.to_fs(:db) %>
+  updated_at: <%= 30.minutes.ago.to_fs(:db) %>
+
+# Activity from last week (for date range testing)
+old_activity:
+  trackable_type: Publisher
+  trackable_id: 1
+  action: created
+  field_changed:
+  old_value:
+  new_value:
+  description: "Publisher was created"
+  metadata: {}
+  created_at: <%= 10.days.ago.to_fs(:db) %>
+  updated_at: <%= 10.days.ago.to_fs(:db) %>
+
+# Another activity for same trackable (for scoping tests)
+author_note_updated:
+  trackable_type: Author
+  trackable_id: 1
+  action: note_updated
+  field_changed:
+  old_value: "Old note content"
+  new_value: "Updated note content"
+  description: "Note was updated"
+  metadata: {}
+  created_at: <%= 5.minutes.ago.to_fs(:db) %>
+  updated_at: <%= 5.minutes.ago.to_fs(:db) %>

@@ -1,0 +1,9 @@
+<div class="flow-root px-6 py-4" data-testid="activity-timeline">
+  <ul role="list" class="-mb-8">
+    <% activities.each_with_index do |activity, index| %>
+      <li>
+        <%= render "activity", activity: activity, last: index == activities.size - 1 %>
+      </li>
+    <% end %>
+  </ul>
+</div>

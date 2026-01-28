@@ -1,0 +1,59 @@
+# Active representation - Jane Austen with her primary agent
+jane_austen_primary:
+  author: jane_austen
+  agent: simon_lipskar
+  status: active
+  start_date: 2020-01-15
+  end_date:
+  primary: true
+  notes: "Primary literary agent for all works"
+
+# Active representation - Jane Austen with secondary agent
+jane_austen_secondary:
+  author: jane_austen
+  agent: romance_agent
+  status: active
+  start_date: 2021-06-01
+  end_date:
+  primary: false
+  notes: "Handles romance-specific works"
+
+# Active representation - Stephen King
+stephen_king_rep:
+  author: stephen_king
+  agent: mystery_agent
+  status: active
+  start_date: 2015-03-10
+  end_date:
+  primary: true
+  notes: "Long-standing relationship"
+
+# Ended representation - Agatha Christie
+agatha_christie_ended:
+  author: agatha_christie
+  agent: esther_newberg
+  status: ended
+  start_date: 2018-01-01
+  end_date: 2022-12-31
+  primary: false
+  notes: "Ended representation after contract dispute"
+
+# Active representation - Agatha Christie with new agent
+agatha_christie_active:
+  author: agatha_christie
+  agent: molly_friedrich
+  status: active
+  start_date: 2023-01-01
+  end_date:
+  primary: true
+  notes: "New primary agent"
+
+# Representation for testing date validation
+mystery_author_rep:
+  author: mystery_author
+  agent: jennifer_joel
+  status: active
+  start_date: 2022-05-15
+  end_date:
+  primary: true
+  notes: "Testing fixture"

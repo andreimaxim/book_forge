@@ -1,0 +1,59 @@
+<tr data-testid="prospect-row">
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="flex items-center">
+      <div class="flex-shrink-0 h-10 w-10">
+        <div class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
+          <span class="text-sm font-medium text-purple-700"><%= prospect.first_name[0] %><%= prospect.last_name[0] %></span>
+        </div>
+      </div>
+      <div class="ml-4">
+        <%= link_to prospect.full_name, prospect_path(prospect), class: "text-sm font-medium text-gray-900 hover:text-blue-600" %>
+        <% if prospect.email.present? %>
+          <div class="text-sm text-gray-500"><%= prospect.email %></div>
+        <% end %>
+      </div>
+    </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="text-sm text-gray-900"><%= prospect.project_title || "-" %></div>
+    <% if prospect.genre_interest.present? %>
+      <div class="text-sm text-gray-500"><%= prospect.genre_interest %></div>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <% if prospect.source.present? %>
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+        <%= prospect.source.humanize %>
+      </span>
+    <% else %>
+      <span class="text-sm text-gray-500">-</span>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <%= badge prospect.stage.humanize, status: prospect.stage.to_sym %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <% if prospect.agent %>
+      <%= link_to prospect.agent.full_name, agent_path(prospect.agent), class: "text-sm text-blue-600 hover:text-blue-800" %>
+    <% else %>
+      <span class="text-sm text-gray-500">Unassigned</span>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <% if prospect.follow_up_date %>
+      <% if prospect.follow_up_date < Date.today %>
+        <span class="text-sm text-red-600 font-medium">Overdue: <%= prospect.follow_up_date.strftime("%b %d") %></span>
+      <% elsif prospect.follow_up_date == Date.today %>
+        <span class="text-sm text-yellow-600 font-medium">Today</span>
+      <% else %>
+        <span class="text-sm text-gray-500"><%= prospect.follow_up_date.strftime("%b %d, %Y") %></span>
+      <% end %>
+    <% else %>
+      <span class="text-sm text-gray-500">-</span>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+    <%= link_to "View", prospect_path(prospect), class: "text-blue-600 hover:text-blue-900" %>
+    <%= link_to "Edit", edit_prospect_path(prospect), class: "text-gray-600 hover:text-gray-900 ml-3" %>
+  </td>
+</tr>

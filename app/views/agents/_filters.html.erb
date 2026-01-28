@@ -1,0 +1,57 @@
+<div class="mb-4 flex flex-wrap gap-4 items-center">
+  <span class="text-sm text-gray-500">Filter by:</span>
+
+  <%# Status filters %>
+  <div class="flex gap-2">
+    <% Agent::STATUSES.each do |status| %>
+      <%= link_to status.humanize,
+        agents_path(status: status, genre: params[:genre], search: params[:search], group_by: params[:group_by]),
+        class: "px-3 py-1 rounded-full text-sm #{params[:status] == status ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}",
+        data: { testid: "filter-status-#{status}" } %>
+    <% end %>
+
+    <% if params[:status].present? %>
+      <%= link_to "Clear",
+        agents_path(genre: params[:genre], search: params[:search], group_by: params[:group_by]),
+        class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200" %>
+    <% end %>
+  </div>
+
+  <%# Genre filters %>
+  <% genres = Agent.pluck(:genres_represented).compact.flat_map { |g| g.split(",").map(&:strip) }.uniq.sort %>
+  <% if genres.any? %>
+    <span class="text-gray-300">|</span>
+    <div class="flex flex-wrap gap-2">
+      <% genres.first(5).each do |genre| %>
+        <%= link_to genre,
+          agents_path(genre: genre, status: params[:status], search: params[:search], group_by: params[:group_by]),
+          class: "px-3 py-1 rounded-full text-sm #{params[:genre] == genre ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}",
+          data: { testid: "filter-genre-#{genre.parameterize}" } %>
+      <% end %>
+
+      <% if params[:genre].present? %>
+        <%= link_to "Clear",
+          agents_path(status: params[:status], search: params[:search], group_by: params[:group_by]),
+          class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200" %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%# Group by agency toggle %>
+  <span class="text-gray-300">|</span>
+  <div class="flex gap-2">
+    <% if params[:group_by] == "agency" %>
+      <%= link_to "List View",
+        agents_path(status: params[:status], genre: params[:genre], search: params[:search]),
+        class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200",
+        data: { testid: "view-list" } %>
+      <span class="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800" data-testid="view-grouped">Group by Agency</span>
+    <% else %>
+      <span class="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800" data-testid="view-list">List View</span>
+      <%= link_to "Group by Agency",
+        agents_path(group_by: "agency", status: params[:status], genre: params[:genre], search: params[:search]),
+        class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200",
+        data: { testid: "view-grouped" } %>
+    <% end %>
+  </div>
+</div>
