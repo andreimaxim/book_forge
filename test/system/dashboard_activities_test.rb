@@ -55,7 +55,7 @@ class DashboardActivitiesSystemTest < ApplicationSystemTestCase
       assert_selector "[data-testid='load-more-activities']"
 
       # Click load more - this replaces the frame with the next page
-      click_button "Load More"
+      click_link "Load More"
 
       # The second page should display more activities
       assert_selector "[data-testid='activity-item']", minimum: 1
