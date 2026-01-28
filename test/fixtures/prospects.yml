@@ -1,0 +1,198 @@
+# New prospect - just submitted a query letter
+new_prospect:
+  first_name: Sarah
+  last_name: Johnson
+  email: sarah.johnson@example.com
+  phone: "555-0201"
+  source: query_letter
+  stage: new
+  genre_interest: Literary Fiction
+  project_title: "The Midnight Garden"
+  project_description: "A lyrical novel about a woman who discovers a secret garden that holds the key to her family's past."
+  estimated_word_count: 85000
+  notes: "Promising query letter with strong voice"
+  agent:
+  last_contact_date:
+  follow_up_date:
+  stage_changed_at: <%= 2.days.ago %>
+
+# Contacted prospect - agent has reached out
+contacted_prospect:
+  first_name: Michael
+  last_name: Chen
+  email: michael.chen@example.com
+  phone: "555-0202"
+  source: conference
+  stage: contacted
+  genre_interest: Science Fiction
+  project_title: "Neural Dawn"
+  project_description: "A hard science fiction novel about consciousness uploading."
+  estimated_word_count: 95000
+  notes: "Met at AWP conference, strong concept"
+  agent: simon_lipskar
+  last_contact_date: <%= 3.days.ago.to_date %>
+  follow_up_date: <%= Date.today %>
+  stage_changed_at: <%= 5.days.ago %>
+
+# Evaluating prospect - manuscript under review
+evaluating_prospect:
+  first_name: Emily
+  last_name: Rodriguez
+  email: emily.rodriguez@example.com
+  phone: "555-0203"
+  source: referral
+  stage: evaluating
+  genre_interest: Mystery
+  project_title: "The Last Detective"
+  project_description: "A noir mystery set in 1940s Los Angeles."
+  estimated_word_count: 75000
+  notes: "Referred by existing client, manuscript received"
+  agent: mystery_agent
+  last_contact_date: <%= 1.week.ago.to_date %>
+  follow_up_date: <%= 1.week.from_now.to_date %>
+  stage_changed_at: <%= 10.days.ago %>
+
+# Negotiating prospect - close to signing
+negotiating_prospect:
+  first_name: David
+  last_name: Kim
+  email: david.kim@example.com
+  phone: "555-0204"
+  source: website
+  stage: negotiating
+  genre_interest: Thriller
+  project_title: "Code Red"
+  project_description: "A techno-thriller about a cybersecurity expert uncovering a global conspiracy."
+  estimated_word_count: 90000
+  notes: "Excellent manuscript, discussing representation terms"
+  agent: jennifer_joel
+  last_contact_date: <%= 1.day.ago.to_date %>
+  follow_up_date:
+  stage_changed_at: <%= 3.days.ago %>
+
+# Converted prospect - now an author
+converted_prospect:
+  first_name: Lisa
+  last_name: Williams
+  email: lisa.williams@example.com
+  phone: "555-0205"
+  source: social_media
+  stage: converted
+  genre_interest: Romance
+  project_title: "Summer Hearts"
+  project_description: "A contemporary romance set in a small coastal town."
+  estimated_word_count: 70000
+  notes: "Successfully converted to author"
+  agent: romance_agent
+  last_contact_date: <%= 2.weeks.ago.to_date %>
+  follow_up_date:
+  stage_changed_at: <%= 1.week.ago %>
+
+# Declined prospect - passed on this opportunity
+declined_prospect:
+  first_name: James
+  last_name: Brown
+  email: james.brown@example.com
+  phone: "555-0206"
+  source: query_letter
+  stage: declined
+  genre_interest: Fantasy
+  project_title: "Dragon's Edge"
+  project_description: "An epic fantasy about dragon riders."
+  estimated_word_count: 150000
+  notes: "Manuscript not quite ready, encouraged to revise"
+  agent: simon_lipskar
+  last_contact_date: <%= 1.month.ago.to_date %>
+  follow_up_date:
+  decline_reason: "Manuscript needs significant revision. Encouraged author to resubmit after major edits."
+  stage_changed_at: <%= 2.weeks.ago %>
+
+# Prospect needing follow up today
+follow_up_today:
+  first_name: Anna
+  last_name: Martinez
+  email: anna.martinez@example.com
+  phone: "555-0207"
+  source: referral
+  stage: contacted
+  genre_interest: Literary Fiction
+  project_title: "The Glass House"
+  project_description: "A family drama spanning three generations."
+  estimated_word_count: 80000
+  notes: "Requested manuscript pages"
+  agent: esther_newberg
+  last_contact_date: <%= 1.week.ago.to_date %>
+  follow_up_date: <%= Date.today %>
+  stage_changed_at: <%= 10.days.ago %>
+
+# Prospect needing follow up this week (but not today)
+follow_up_this_week:
+  first_name: Robert
+  last_name: Taylor
+  email: robert.taylor@example.com
+  phone: "555-0208"
+  source: conference
+  stage: evaluating
+  genre_interest: Nonfiction
+  project_title: "The Innovation Mindset"
+  project_description: "A business book about fostering innovation in organizations."
+  estimated_word_count: 65000
+  notes: "Proposal under review"
+  agent: molly_friedrich
+  last_contact_date: <%= 2.weeks.ago.to_date %>
+  follow_up_date: <%= 3.days.from_now.to_date %>
+  stage_changed_at: <%= 3.weeks.ago %>
+
+# Prospect overdue for follow up
+overdue_follow_up:
+  first_name: Patricia
+  last_name: Anderson
+  email: patricia.anderson@example.com
+  phone: "555-0209"
+  source: website
+  stage: contacted
+  genre_interest: Memoir
+  project_title: "Walking Through Fire"
+  project_description: "A memoir about overcoming adversity."
+  estimated_word_count: 55000
+  notes: "Need to schedule call to discuss manuscript"
+  agent: jennifer_rudolph_walsh
+  last_contact_date: <%= 1.month.ago.to_date %>
+  follow_up_date: <%= 5.days.ago.to_date %>
+  stage_changed_at: <%= 1.month.ago %>
+
+# Unassigned prospect (no agent)
+unassigned_prospect:
+  first_name: Christopher
+  last_name: Lee
+  email: christopher.lee@example.com
+  phone: "555-0210"
+  source: query_letter
+  stage: new
+  genre_interest: Horror
+  project_title: "The Forgotten"
+  project_description: "A psychological horror novel."
+  estimated_word_count: 78000
+  notes: "Needs to be assigned to an agent"
+  agent:
+  last_contact_date:
+  follow_up_date:
+  stage_changed_at: <%= 1.day.ago %>
+
+# Prospect without email (to test optional email)
+prospect_no_email:
+  first_name: Anonymous
+  last_name: Author
+  email:
+  phone: "555-0211"
+  source: other
+  stage: new
+  genre_interest: Fiction
+  project_title: "Untitled Project"
+  project_description: "A fiction project."
+  estimated_word_count: 60000
+  notes: "Contacted via phone only"
+  agent:
+  last_contact_date:
+  follow_up_date:
+  stage_changed_at: <%= Time.current %>

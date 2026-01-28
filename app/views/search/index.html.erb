@@ -1,0 +1,64 @@
+<% content_for(:title, "Search - BookForge") %>
+
+<div class="w-full max-w-4xl mx-auto">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6">Search Results</h1>
+
+  <!-- Search form -->
+  <div class="mb-8">
+    <%= form_tag search_path, method: :get, class: "flex gap-3" do %>
+      <div class="flex-1">
+        <input
+          type="text"
+          name="q"
+          value="<%= @query %>"
+          placeholder="Search authors, books, publishers, agents, prospects, deals..."
+          class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+          autofocus
+          data-testid="search-page-input"
+        />
+      </div>
+      <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        Search
+      </button>
+    <% end %>
+  </div>
+
+  <!-- Type filters -->
+  <% if @query.present? %>
+    <div class="mb-6 flex flex-wrap gap-2" data-testid="search-type-filters">
+      <%= link_to "All",
+        search_path(q: @query),
+        class: "px-3 py-1.5 text-sm font-medium rounded-full #{@entity_type.blank? ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}",
+        data: { testid: "search-type-filter" } %>
+      <% Search::ENTITY_TYPES.each_key do |type| %>
+        <%= link_to type.pluralize,
+          search_path(q: @query, type: type),
+          class: "px-3 py-1.5 text-sm font-medium rounded-full #{@entity_type == type ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}",
+          data: { testid: "search-type-filter" } %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- Results -->
+  <div data-testid="search-results">
+    <% if @query.blank? %>
+      <div data-testid="search-empty-state" class="text-center py-12">
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <p class="mt-2 text-sm text-gray-500">Enter a search term to find authors, books, publishers, agents, prospects, and deals.</p>
+      </div>
+    <% elsif @total_count == 0 %>
+      <div data-testid="search-empty-state" class="text-center py-12">
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <p class="mt-2 text-sm text-gray-500">No results found for "<%= @query %>".</p>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500 mb-4"><%= @total_count %> result<%= @total_count == 1 ? "" : "s" %> for "<%= @query %>"</p>
+
+      <%= render "results", grouped_results: @grouped_results %>
+    <% end %>
+  </div>
+</div>

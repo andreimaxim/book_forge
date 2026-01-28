@@ -1,0 +1,46 @@
+<div data-testid="book-card" id="<%= dom_id(book) %>-card" class="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow">
+  <div class="p-4">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 h-24 w-16 bg-gray-200 rounded flex items-center justify-center">
+        <% if book.cover_image_url.present? %>
+          <%= image_tag book.cover_image_url, class: "h-24 w-16 object-cover rounded" %>
+        <% else %>
+          <svg class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        <% end %>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm font-medium text-gray-900 truncate">
+          <%= link_to book.title, book, class: "hover:text-blue-600" %>
+        </h3>
+        <% if book.subtitle.present? %>
+          <p class="text-xs text-gray-500 truncate"><%= book.subtitle %></p>
+        <% end %>
+        <p class="mt-1 text-sm text-gray-600">
+          <%= link_to book.author.full_name, book.author, class: "hover:text-blue-600" %>
+        </p>
+        <div class="mt-2 flex items-center gap-2">
+          <%= badge book.status.humanize, status: book.status.to_sym %>
+          <span class="text-xs text-gray-400"><%= book.genre %></span>
+        </div>
+      </div>
+    </div>
+
+    <% if book.word_count.present? || book.page_count.present? %>
+      <div class="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+        <% if book.word_count.present? %>
+          <span><%= book.formatted_word_count %></span>
+        <% end %>
+        <% if book.page_count.present? %>
+          <span><%= book.page_count %> pages</span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="bg-gray-50 px-4 py-3 flex justify-end gap-2 text-sm">
+    <%= link_to "Edit", edit_book_path(book), class: "text-blue-600 hover:text-blue-900" %>
+    <%= link_to "Delete", book_path(book), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete #{book.title}?" }, class: "text-red-600 hover:text-red-900" %>
+  </div>
+</div>

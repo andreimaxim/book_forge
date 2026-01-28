@@ -1,0 +1,14 @@
+<div data-testid="search-result-group" data-testid-type="<%= type %>" class="<%= "search-result-group-#{type}" %>">
+  <div data-testid="search-result-group-<%= type %>">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
+      <%= type.pluralize %>
+      <span class="text-sm font-normal text-gray-500">(<%= results.size %>)</span>
+    </h2>
+
+    <div class="bg-white rounded-lg shadow divide-y divide-gray-200">
+      <% results.each do |result| %>
+        <%= render "result_item", result: result %>
+      <% end %>
+    </div>
+  </div>
+</div>

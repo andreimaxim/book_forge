@@ -1,0 +1,24 @@
+<div class="mb-4">
+  <%= form_with url: prospects_path, method: :get, class: "flex gap-2" do |form| %>
+    <% if params[:view] == "pipeline" %>
+      <%= form.hidden_field :view, value: "pipeline" %>
+    <% end %>
+    <% if params[:stage].present? %>
+      <%= form.hidden_field :stage, value: params[:stage] %>
+    <% end %>
+    <% if params[:source].present? %>
+      <%= form.hidden_field :source, value: params[:source] %>
+    <% end %>
+    <% if params[:agent_id].present? %>
+      <%= form.hidden_field :agent_id, value: params[:agent_id] %>
+    <% end %>
+
+    <div class="flex-1">
+      <%= form.text_field :search,
+        value: params[:search],
+        placeholder: "Search by name or project title...",
+        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+    </div>
+    <%= form.submit "Search", class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 cursor-pointer" %>
+  <% end %>
+</div>

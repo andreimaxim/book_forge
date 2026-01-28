@@ -1,0 +1,10 @@
+<div class="mb-8">
+  <h2 class="text-lg font-medium text-gray-900 mb-4">Activity Timeline</h2>
+  <div class="bg-white rounded-lg shadow overflow-hidden p-6">
+    <turbo-frame id="dashboard_activities" src="<%= dashboard_activities_path %>" loading="lazy">
+      <div class="text-center py-8">
+        <p class="text-sm text-gray-500">Loading activities...</p>
+      </div>
+    </turbo-frame>
+  </div>
+</div>

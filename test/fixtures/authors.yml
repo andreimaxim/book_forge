@@ -1,0 +1,101 @@
+# Active authors
+jane_austen:
+  first_name: Jane
+  last_name: Austen
+  email: jane.austen@example.com
+  phone: "555-0101"
+  bio: "English novelist known for her romantic fiction."
+  website: https://janeausten.example.com
+  genre_focus: Romance
+  status: active
+  date_of_birth: 1775-12-16
+  notes: "Classic literature author"
+
+stephen_king:
+  first_name: Stephen
+  last_name: King
+  email: stephen.king@example.com
+  phone: "555-0102"
+  bio: "American author of horror, supernatural fiction, and suspense."
+  website: https://stephenking.example.com
+  genre_focus: Horror
+  status: active
+  date_of_birth: 1947-09-21
+  notes: "Prolific writer with over 60 novels"
+
+agatha_christie:
+  first_name: Agatha
+  last_name: Christie
+  email: agatha.christie@example.com
+  phone: "555-0103"
+  bio: "English writer known for detective novels."
+  website: https://agathachristie.example.com
+  genre_focus: Mystery
+  status: active
+  date_of_birth: 1890-09-15
+  notes: "Best-selling fiction writer of all time"
+
+# Author without email (to test optional email)
+author_no_email:
+  first_name: Anonymous
+  last_name: Writer
+  email:
+  phone: "555-0104"
+  bio: "A mysterious author"
+  website:
+  genre_focus: Fiction
+  status: active
+  date_of_birth:
+  notes:
+
+# Inactive author
+inactive_author:
+  first_name: Retired
+  last_name: Novelist
+  email: retired.novelist@example.com
+  phone: "555-0105"
+  bio: "No longer writing"
+  website:
+  genre_focus: Literary Fiction
+  status: inactive
+  date_of_birth: 1950-03-20
+  notes: "Retired from writing in 2020"
+
+# Deceased author
+deceased_author:
+  first_name: Classic
+  last_name: Writer
+  email:
+  phone:
+  bio: "A legendary author from the past"
+  website:
+  genre_focus: Classic
+  status: deceased
+  date_of_birth: 1900-01-01
+  notes: "Passed away in 1980"
+
+# Another mystery author for genre testing
+mystery_author:
+  first_name: Arthur
+  last_name: Conan
+  email: arthur.conan@example.com
+  phone: "555-0106"
+  bio: "Creator of Sherlock Holmes"
+  website: https://arthurconan.example.com
+  genre_focus: Mystery
+  status: active
+  date_of_birth: 1859-05-22
+  notes: "Famous for detective stories"
+
+# Author without books (for deletion testing)
+author_without_books:
+  first_name: Deletable
+  last_name: Author
+  email: deletable.author@example.com
+  phone: "555-0107"
+  bio: "An author with no books, for testing deletion"
+  website:
+  genre_focus: Fiction
+  status: active
+  date_of_birth:
+  notes: "Can be safely deleted"

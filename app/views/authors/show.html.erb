@@ -1,0 +1,67 @@
+<div class="w-full">
+  <div class="mb-6">
+    <%= link_to "&larr; Back to Authors".html_safe, authors_path, class: "text-blue-600 hover:text-blue-800 text-sm" %>
+  </div>
+
+  <%= turbo_frame_tag @author do %>
+    <%= render "authors/author_detail", author: @author %>
+  <% end %>
+
+  <%# Tab Navigation %>
+  <% show_agents_tab = @representation&.errors&.any? %>
+  <div class="mt-6 bg-white rounded-lg shadow overflow-hidden" data-controller="tabs" data-tabs-active-class="border-blue-500 text-blue-600" data-tabs-inactive-class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+    <div class="border-b border-gray-200">
+      <nav class="-mb-px flex" data-testid="author-tabs">
+        <a href="#books" class="border-b-2 <%= show_agents_tab ? 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' : 'border-blue-500 text-blue-600' %> py-4 px-6 text-sm font-medium" data-tabs-target="tab" data-action="click->tabs#switch" data-tab="books">
+          Books
+        </a>
+        <a href="#deals" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-4 px-6 text-sm font-medium" data-tabs-target="tab" data-action="click->tabs#switch" data-tab="deals">
+          Deals
+        </a>
+        <a href="#agents" class="border-b-2 <%= show_agents_tab ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' %> py-4 px-6 text-sm font-medium" data-tabs-target="tab" data-action="click->tabs#switch" data-tab="agents">
+          Agents
+        </a>
+        <a href="#notes" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-4 px-6 text-sm font-medium" data-tabs-target="tab" data-action="click->tabs#switch" data-tab="notes">
+          Notes
+        </a>
+      </nav>
+    </div>
+
+    <%# Tab Content %>
+    <div>
+      <div data-testid="books-tab-content" data-tabs-target="panel" data-panel="books" class="p-6 <%= 'hidden' if show_agents_tab %>">
+        <%= render "authors/books_tab", author: @author, books: @books %>
+      </div>
+
+      <div data-testid="deals-tab-content" data-tabs-target="panel" data-panel="deals" class="p-6 hidden">
+        <%= render "authors/deals_tab", author: @author, deals: @deals %>
+      </div>
+
+      <div data-testid="agents-tab-content" data-tabs-target="panel" data-panel="agents" class="p-6 <%= 'hidden' unless show_agents_tab %>">
+        <% representation = @representation || @author.representations.build %>
+        <%= render "representations/list", parent: @author, representations: @author.representations.includes(:agent).order(primary: :desc, start_date: :desc), representation: representation %>
+      </div>
+
+      <div data-testid="notes-tab-content" data-tabs-target="panel" data-panel="notes" class="p-6 hidden">
+        <%= render "notes/list", notable: @author, notes: @author.note_records.pinned_first %>
+      </div>
+    </div>
+  </div>
+
+  <%# Activity Timeline Section %>
+  <div class="mt-6 bg-white rounded-lg shadow overflow-hidden" data-testid="activity-timeline-section">
+    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+      <h2 class="text-lg font-medium text-gray-900">Activities</h2>
+      <%= link_to "View All Activities",
+          activities_path(trackable_type: "Author", trackable_id: @author.id),
+          class: "text-sm text-blue-600 hover:text-blue-800" %>
+    </div>
+    <% if @recent_activities.any? %>
+      <%= render "activities/timeline", activities: @recent_activities %>
+    <% else %>
+      <div class="px-6 py-8 text-center text-gray-500 text-sm">
+        No activities recorded yet.
+      </div>
+    <% end %>
+  </div>
+</div>

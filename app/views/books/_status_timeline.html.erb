@@ -1,0 +1,64 @@
+<%# Status Timeline showing the book's progression through statuses %>
+<div data-testid="status-timeline" class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+  <h3 class="text-sm font-medium text-gray-500 mb-3">Status Timeline</h3>
+  <div class="flex items-center justify-between">
+    <%
+      statuses = Book::STATUSES
+      current_index = statuses.index(book.status) || 0
+    %>
+    <% statuses.each_with_index do |status, index| %>
+      <%
+        is_current = status == book.status
+        is_completed = index < current_index
+        is_future = index > current_index
+
+        # Determine styling based on status
+        if is_completed
+          circle_classes = "bg-green-500 text-white"
+          line_classes = "bg-green-500"
+          label_classes = "text-green-600"
+        elsif is_current
+          circle_classes = "bg-blue-500 text-white ring-4 ring-blue-100"
+          line_classes = "bg-gray-200"
+          label_classes = "text-blue-600 font-medium"
+        else
+          circle_classes = "bg-gray-200 text-gray-400"
+          line_classes = "bg-gray-200"
+          label_classes = "text-gray-400"
+        end
+      %>
+
+      <div class="flex flex-col items-center flex-1">
+        <%# Status circle %>
+        <div class="flex items-center w-full">
+          <% if index > 0 %>
+            <div class="flex-1 h-0.5 <%= is_completed || is_current ? 'bg-green-500' : 'bg-gray-200' %>"></div>
+          <% else %>
+            <div class="flex-1"></div>
+          <% end %>
+
+          <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center <%= circle_classes %>">
+            <% if is_completed %>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            <% else %>
+              <span class="text-xs font-medium"><%= index + 1 %></span>
+            <% end %>
+          </div>
+
+          <% if index < statuses.length - 1 %>
+            <div class="flex-1 h-0.5 <%= is_completed ? 'bg-green-500' : 'bg-gray-200' %>"></div>
+          <% else %>
+            <div class="flex-1"></div>
+          <% end %>
+        </div>
+
+        <%# Status label %>
+        <span class="mt-2 text-xs <%= label_classes %> text-center whitespace-nowrap">
+          <%= status.humanize %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>

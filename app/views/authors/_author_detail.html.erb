@@ -1,0 +1,74 @@
+<div class="bg-white rounded-lg shadow overflow-hidden">
+  <div class="px-6 py-5 border-b border-gray-200">
+    <div class="flex justify-between items-start">
+      <div class="flex items-center">
+        <div class="flex-shrink-0 h-16 w-16">
+          <div class="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center">
+            <span class="text-xl font-medium text-blue-700"><%= author.initials %></span>
+          </div>
+        </div>
+        <div class="ml-4">
+          <h1 class="text-2xl font-bold text-gray-900"><%= author.full_name %></h1>
+          <div class="mt-1">
+            <%= badge author.status.humanize, status: author.status.to_sym %>
+            <span data-testid="author-status" class="sr-only"><%= author.status %></span>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <%= secondary_button "Edit", url: edit_author_path(author) %>
+        <%= danger_button "Delete", url: author_path(author), confirm: "Are you sure you want to delete #{author.full_name}?", data: { turbo_method: :delete } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="px-6 py-5">
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+      <div>
+        <dt class="text-sm font-medium text-gray-500">Email</dt>
+        <dd class="mt-1 text-sm text-gray-900" data-testid="author-email"><%= author.email || "-" %></dd>
+      </div>
+
+      <div>
+        <dt class="text-sm font-medium text-gray-500">Phone</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= author.phone || "-" %></dd>
+      </div>
+
+      <div>
+        <dt class="text-sm font-medium text-gray-500">Website</dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <% if author.website.present? %>
+            <%= link_to author.website, author.website, target: "_blank", rel: "noopener noreferrer", class: "text-blue-600 hover:text-blue-800" %>
+          <% else %>
+            -
+          <% end %>
+        </dd>
+      </div>
+
+      <div>
+        <dt class="text-sm font-medium text-gray-500">Genre Focus</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= author.genre_focus || "-" %></dd>
+      </div>
+
+      <div>
+        <dt class="text-sm font-medium text-gray-500">Date of Birth</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= author.date_of_birth&.strftime("%B %d, %Y") || "-" %></dd>
+      </div>
+
+      <div>
+        <dt class="text-sm font-medium text-gray-500">Status</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= author.status.humanize %></dd>
+      </div>
+
+      <div class="sm:col-span-2">
+        <dt class="text-sm font-medium text-gray-500">Bio</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= author.bio || "-" %></dd>
+      </div>
+
+      <div class="sm:col-span-2">
+        <dt class="text-sm font-medium text-gray-500">Notes</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= author.notes || "-" %></dd>
+      </div>
+    </dl>
+  </div>
+</div>

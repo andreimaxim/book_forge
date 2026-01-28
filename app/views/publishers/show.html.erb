@@ -1,0 +1,112 @@
+<div class="w-full">
+  <div class="mb-6">
+    <%= link_to "&larr; Back to Publishers".html_safe, publishers_path, class: "text-blue-600 hover:text-blue-800 text-sm" %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="px-6 py-5 border-b border-gray-200">
+      <div class="flex justify-between items-start">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 h-16 w-16">
+            <div class="h-16 w-16 rounded-full <%= @publisher.big_five? ? 'bg-purple-100' : 'bg-green-100' %> flex items-center justify-center">
+              <span class="text-xl font-medium <%= @publisher.big_five? ? 'text-purple-700' : 'text-green-700' %>"><%= @publisher.name.first(2).upcase %></span>
+            </div>
+          </div>
+          <div class="ml-4">
+            <h1 class="text-2xl font-bold text-gray-900"><%= @publisher.display_name %></h1>
+            <div class="mt-1 flex items-center gap-2">
+              <%= badge @publisher.status.humanize, status: @publisher.status.to_sym %>
+              <span data-testid="publisher-status" class="sr-only"><%= @publisher.status %></span>
+              <% if @publisher.size.present? %>
+                <%= badge @publisher.size.humanize.titleize, status: @publisher.big_five? ? :info : :default %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <%= secondary_button "Edit", url: edit_publisher_path(@publisher) %>
+          <%= danger_button "Delete", url: publisher_path(@publisher), confirm: "Are you sure you want to delete #{@publisher.display_name}?", data: { turbo_method: :delete } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 py-5">
+      <h2 class="text-lg font-medium text-gray-900 mb-4">Contact Information</h2>
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Contact Name</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @publisher.contact_name || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Contact Email</dt>
+          <dd class="mt-1 text-sm text-gray-900" data-testid="publisher-contact-email">
+            <% if @publisher.contact_email.present? %>
+              <%= mail_to @publisher.contact_email, @publisher.contact_email, class: "text-blue-600 hover:text-blue-800" %>
+            <% else %>
+              -
+            <% end %>
+          </dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Contact Phone</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @publisher.contact_phone || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Main Phone</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @publisher.phone || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Website</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <% if @publisher.website.present? %>
+              <%= link_to @publisher.website, @publisher.website, target: "_blank", rel: "noopener noreferrer", class: "text-blue-600 hover:text-blue-800" %>
+            <% else %>
+              -
+            <% end %>
+          </dd>
+        </div>
+      </dl>
+
+      <% if @publisher.full_address.present? %>
+        <h2 class="text-lg font-medium text-gray-900 mt-6 mb-4">Address</h2>
+        <address class="text-sm text-gray-900 not-italic whitespace-pre-line">
+          <%= @publisher.full_address %>
+        </address>
+      <% end %>
+
+      <% if @publisher.notes.present? %>
+        <h2 class="text-lg font-medium text-gray-900 mt-6 mb-4">Notes</h2>
+        <p class="text-sm text-gray-900"><%= @publisher.notes %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Tab Navigation %>
+  <div class="mt-6 bg-white rounded-lg shadow overflow-hidden" data-controller="tabs" data-tabs-active-class="border-blue-500 text-blue-600" data-tabs-inactive-class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+    <div class="border-b border-gray-200">
+      <nav class="-mb-px flex" data-testid="publisher-tabs">
+        <a href="#books" class="border-b-2 border-blue-500 text-blue-600 py-4 px-6 text-sm font-medium" data-tabs-target="tab" data-action="click->tabs#switch" data-tab="books">
+          Books
+        </a>
+        <a href="#deals" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-4 px-6 text-sm font-medium" data-tabs-target="tab" data-action="click->tabs#switch" data-tab="deals">
+          Deals
+        </a>
+      </nav>
+    </div>
+
+    <%# Tab Content %>
+    <div>
+      <div data-testid="books-tab-content" data-tabs-target="panel" data-panel="books" class="p-6">
+        <%= render "publishers/books_tab", publisher: @publisher, books: @books %>
+      </div>
+
+      <div data-testid="deals-tab-content" data-tabs-target="panel" data-panel="deals" class="p-6 hidden">
+        <%= render "publishers/deals_tab", publisher: @publisher, deals: @deals %>
+      </div>
+    </div>
+  </div>
+</div>

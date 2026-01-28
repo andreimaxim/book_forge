@@ -1,0 +1,239 @@
+# Signed world rights deal for Pride and Prejudice
+pride_and_prejudice_deal:
+  book: pride_and_prejudice
+  publisher: penguin_random_house
+  agent: romance_agent
+  deal_type: world_rights
+  advance_amount: 500000.00
+  advance_currency: USD
+  royalty_rate_hardcover: 15.00
+  royalty_rate_paperback: 10.00
+  royalty_rate_ebook: 25.00
+  status: signed
+  offer_date: 2024-01-15
+  contract_date: 2024-02-01
+  delivery_date: 2024-06-01
+  publication_date: 2025-01-15
+  option_books: 2
+  terms_summary: "World English rights with option for two additional books"
+  notes: "Major deal with substantial advance"
+
+# Active deal for The Shining
+the_shining_deal:
+  book: the_shining
+  publisher: simon_schuster
+  agent: simon_lipskar
+  deal_type: north_american
+  advance_amount: 750000.00
+  advance_currency: USD
+  royalty_rate_hardcover: 15.00
+  royalty_rate_paperback: 12.00
+  royalty_rate_ebook: 25.00
+  status: active
+  offer_date: 2023-06-01
+  contract_date: 2023-07-15
+  delivery_date: 2023-12-01
+  publication_date: 2024-03-15
+  option_books: 1
+  terms_summary: "North American rights only"
+  notes: "Horror classic reprint"
+
+# Negotiating deal (no agent)
+negotiating_deal:
+  book: manuscript_in_progress
+  publisher: harpercollins
+  agent:
+  deal_type: world_rights
+  advance_amount: 100000.00
+  advance_currency: USD
+  royalty_rate_hardcover: 12.00
+  royalty_rate_paperback: 8.00
+  royalty_rate_ebook: 20.00
+  status: negotiating
+  offer_date: 2026-01-10
+  contract_date:
+  delivery_date:
+  publication_date:
+  option_books:
+  terms_summary: "Initial offer for world rights"
+  notes: "In early negotiation phase"
+
+# Pending contract deal
+pending_contract_deal:
+  book: book_under_review
+  publisher: macmillan
+  agent: mystery_agent
+  deal_type: north_american
+  advance_amount: 250000.00
+  advance_currency: USD
+  royalty_rate_hardcover: 14.00
+  royalty_rate_paperback: 10.00
+  royalty_rate_ebook: 22.00
+  status: pending_contract
+  offer_date: 2026-01-05
+  contract_date:
+  delivery_date:
+  publication_date:
+  option_books: 3
+  terms_summary: "NA rights with three book option"
+  notes: "Awaiting contract review"
+
+# Translation rights deal
+translation_deal:
+  book: murder_on_orient_express
+  publisher: hachette
+  agent: esther_newberg
+  deal_type: translation
+  advance_amount: 50000.00
+  advance_currency: EUR
+  royalty_rate_hardcover:
+  royalty_rate_paperback: 8.00
+  royalty_rate_ebook: 15.00
+  status: signed
+  offer_date: 2025-06-01
+  contract_date: 2025-07-01
+  delivery_date:
+  publication_date: 2026-03-01
+  option_books:
+  terms_summary: "French translation rights"
+  notes: "For French market"
+
+# Audio rights deal
+audio_deal:
+  book: it
+  publisher: scholastic
+  agent: simon_lipskar
+  deal_type: audio
+  advance_amount: 100000.00
+  advance_currency: USD
+  royalty_rate_hardcover:
+  royalty_rate_paperback:
+  royalty_rate_ebook:
+  status: active
+  offer_date: 2025-03-15
+  contract_date: 2025-04-01
+  delivery_date:
+  publication_date: 2025-09-01
+  option_books:
+  terms_summary: "Audiobook rights only"
+  notes: "For audio production"
+
+# Film/TV rights deal
+film_tv_deal:
+  book: the_shining
+  publisher: chronicle_books
+  agent: jennifer_rudolph_walsh
+  deal_type: film_tv
+  advance_amount: 2000000.00
+  advance_currency: USD
+  royalty_rate_hardcover:
+  royalty_rate_paperback:
+  royalty_rate_ebook:
+  status: completed
+  offer_date: 2024-01-01
+  contract_date: 2024-02-15
+  delivery_date:
+  publication_date:
+  option_books:
+  terms_summary: "Film adaptation rights"
+  notes: "Major studio deal"
+
+# Terminated deal
+terminated_deal:
+  book: submitted_book
+  publisher: defunct_publishing
+  agent: inactive_agent
+  deal_type: world_rights
+  advance_amount: 75000.00
+  advance_currency: USD
+  royalty_rate_hardcover: 10.00
+  royalty_rate_paperback: 7.00
+  royalty_rate_ebook: 18.00
+  status: terminated
+  offer_date: 2023-01-01
+  contract_date: 2023-02-01
+  delivery_date:
+  publication_date:
+  option_books:
+  terms_summary: "Terminated due to publisher closing"
+  notes: "Publisher went out of business"
+
+# Deal from last year (for yearly scope testing)
+last_year_deal:
+  book: sense_and_sensibility
+  publisher: graywolf_press
+  agent: molly_friedrich
+  deal_type: north_american
+  advance_amount: 150000.00
+  advance_currency: USD
+  royalty_rate_hardcover: 12.00
+  royalty_rate_paperback: 8.00
+  royalty_rate_ebook: 20.00
+  status: signed
+  offer_date: 2025-03-15
+  contract_date: 2025-04-01
+  delivery_date: 2025-10-01
+  publication_date: 2026-02-15
+  option_books: 1
+  terms_summary: "NA rights for new edition"
+  notes: "Classic reprint deal"
+
+# Deal with no advance (for edge case testing)
+no_advance_deal:
+  book: book_without_word_count
+  publisher: indie_press
+  agent:
+  deal_type: world_rights
+  advance_amount:
+  advance_currency: USD
+  royalty_rate_hardcover: 15.00
+  royalty_rate_paperback: 10.00
+  royalty_rate_ebook: 30.00
+  status: negotiating
+  offer_date: 2026-01-20
+  contract_date:
+  delivery_date:
+  publication_date:
+  option_books:
+  terms_summary: "Royalty-only deal with indie publisher"
+  notes: "No advance, higher royalty rates"
+
+# Deal with high commission agent
+high_commission_deal:
+  book: accepted_book
+  publisher: uk_publisher
+  agent: high_commission_agent
+  deal_type: translation
+  advance_amount: 200000.00
+  advance_currency: GBP
+  royalty_rate_hardcover: 12.00
+  royalty_rate_paperback: 8.00
+  royalty_rate_ebook: 20.00
+  status: active
+  offer_date: 2025-11-01
+  contract_date: 2025-12-01
+  delivery_date: 2026-06-01
+  publication_date: 2026-12-01
+  option_books:
+  terms_summary: "UK rights with celebrity agent"
+  notes: "High-profile deal with premium representation"
+
+# Deal from this quarter (for quarterly scope testing)
+this_quarter_deal:
+  book: book_in_production
+  publisher: harpercollins
+  agent: jennifer_joel
+  deal_type: world_rights
+  advance_amount: 350000.00
+  advance_currency: USD
+  royalty_rate_hardcover: 14.00
+  royalty_rate_paperback: 10.00
+  royalty_rate_ebook: 24.00
+  status: signed
+  offer_date: 2026-01-15
+  contract_date: 2026-01-20
+  delivery_date: 2026-07-01
+  publication_date: 2027-01-15
+  option_books: 2
+  terms_summary: "World rights for horror novel"
+  notes: "New deal signed this quarter"

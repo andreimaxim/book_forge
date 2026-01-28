@@ -1,0 +1,43 @@
+<turbo-frame id="dashboard_activities">
+  <div data-testid="dashboard-activity-timeline">
+    <%# Entity type filter tabs %>
+    <div class="flex items-center space-x-2 mb-4" data-testid="activity-entity-filters">
+      <%= link_to "All",
+          dashboard_activities_path,
+          class: "px-3 py-1.5 text-sm font-medium rounded-md transition-colors #{@entity_type.blank? ? 'bg-blue-100 text-blue-800' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'}",
+          data: { turbo_frame: "dashboard_activities" } %>
+      <% %w[Author Book Deal Publisher].each do |type| %>
+        <%= link_to type,
+            dashboard_activities_path(entity_type: type),
+            class: "px-3 py-1.5 text-sm font-medium rounded-md transition-colors #{@entity_type == type ? 'bg-blue-100 text-blue-800' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'}",
+            data: { turbo_frame: "dashboard_activities" } %>
+      <% end %>
+    </div>
+
+    <%# Activity timeline grouped by day %>
+    <% if @activities_by_day.any? %>
+      <div id="activity-day-groups">
+        <% @activities_by_day.each do |day, day_activities| %>
+          <%= render "dashboard/activity_day", day: day, activities: day_activities %>
+        <% end %>
+      </div>
+
+      <% if @has_more %>
+        <div class="mt-4 text-center">
+          <%= button_to "Load More",
+              dashboard_activities_path(page: @page + 1, entity_type: @entity_type),
+              method: :get,
+              class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors",
+              data: { testid: "load-more-activities", turbo_frame: "dashboard_activities" } %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="text-center py-8">
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="mt-2 text-sm text-gray-500">No activities found.</p>
+      </div>
+    <% end %>
+  </div>
+</turbo-frame>

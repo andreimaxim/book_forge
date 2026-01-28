@@ -1,0 +1,14 @@
+<%= form_with url: authors_path, method: :get, data: { turbo_frame: "authors_list" }, class: "mb-4" do |form| %>
+  <div class="flex gap-4">
+    <div class="flex-1">
+      <%= form.search_field :search,
+        value: params[:search],
+        placeholder: "Search authors by name or email...",
+        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
+        data: { testid: "search-input" } %>
+    </div>
+    <div>
+      <%= form.submit "Search", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    </div>
+  </div>
+<% end %>

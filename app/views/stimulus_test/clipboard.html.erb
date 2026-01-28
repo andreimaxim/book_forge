@@ -1,0 +1,20 @@
+<div class="flex-1 max-w-md">
+  <h1 class="text-2xl font-bold text-gray-900">Clipboard Test</h1>
+  <p class="mt-2 text-gray-600">Tests copy to clipboard functionality.</p>
+
+  <div class="mt-6" data-controller="clipboard">
+    <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-md">
+      <code data-testid="copy-source"
+            data-clipboard-target="source"
+            class="flex-1 text-sm font-mono text-gray-800">Text to copy</code>
+
+      <button type="button"
+              data-testid="copy-button"
+              data-clipboard-target="button"
+              data-action="click->clipboard#copy"
+              class="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+        Copy
+      </button>
+    </div>
+  </div>
+</div>

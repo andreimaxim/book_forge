@@ -1,0 +1,181 @@
+<%= form_with model: deal, class: "space-y-6" do |form| %>
+  <% if deal.errors.any? %>
+    <div class="rounded-md bg-red-50 p-4">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            There were <%= pluralize(deal.errors.count, "error") %> with your submission
+          </h3>
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% deal.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <legend class="text-lg font-medium text-gray-900 mb-4">Deal Parties</legend>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="mb-4">
+        <%= form.label :book_id, "Book", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.select :book_id,
+          Book.includes(:author).order(:title).map { |b| ["#{b.title} by #{b.author.full_name}", b.id] },
+          { include_blank: "Select a book...", selected: deal.book_id },
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :publisher_id, "Publisher", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.select :publisher_id,
+          Publisher.active.alphabetical.map { |p| [p.display_name, p.id] },
+          { include_blank: "Select a publisher...", selected: deal.publisher_id },
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :agent_id, "Agent (Optional)", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.select :agent_id,
+        [["No Agent", ""]] + Agent.active.alphabetical.map { |a| ["#{a.full_name} (#{a.agency_name})", a.id] },
+        { selected: deal.agent_id },
+        class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend class="text-lg font-medium text-gray-900 mb-4">Deal Type & Status</legend>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="mb-4">
+        <%= form.label :deal_type, "Deal Type", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.select :deal_type,
+          Deal::DEAL_TYPES.map { |t| [t.humanize, t] },
+          { include_blank: "Select deal type...", selected: deal.deal_type },
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :status, "Status", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.select :status,
+          Deal::STATUSES.map { |s| [s.humanize, s] },
+          { selected: deal.status || "negotiating" },
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend class="text-lg font-medium text-gray-900 mb-4">Financial Terms</legend>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="mb-4">
+        <%= form.label :advance_amount, "Advance Amount", class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <span class="text-gray-500 sm:text-sm">$</span>
+          </div>
+          <%= form.number_field :advance_amount,
+            step: 0.01,
+            min: 0,
+            class: "pl-7 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :advance_currency, "Currency", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.select :advance_currency,
+          Deal::CURRENCY_SYMBOLS.map { |code, symbol| ["#{code} (#{symbol})", code] },
+          { selected: deal.advance_currency || "USD" },
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+      <div class="mb-4">
+        <%= form.label :royalty_rate_hardcover, "Hardcover Royalty %", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.number_field :royalty_rate_hardcover,
+          step: 0.01,
+          min: 0,
+          max: 100,
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :royalty_rate_paperback, "Paperback Royalty %", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.number_field :royalty_rate_paperback,
+          step: 0.01,
+          min: 0,
+          max: 100,
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :royalty_rate_ebook, "E-book Royalty %", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.number_field :royalty_rate_ebook,
+          step: 0.01,
+          min: 0,
+          max: 100,
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend class="text-lg font-medium text-gray-900 mb-4">Key Dates</legend>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="mb-4">
+        <%= form.label :offer_date, "Offer Date", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.date_field :offer_date, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :contract_date, "Contract Date", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.date_field :contract_date, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :delivery_date, "Delivery Date", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.date_field :delivery_date, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :publication_date, "Publication Date", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.date_field :publication_date, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend class="text-lg font-medium text-gray-900 mb-4">Additional Terms</legend>
+
+    <div class="mb-4">
+      <%= form.label :option_books, "Option Books", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.number_field :option_books,
+        min: 0,
+        placeholder: "Number of option books in the deal",
+        class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      <p class="mt-1 text-sm text-gray-500">Number of future books included in the option</p>
+    </div>
+
+    <%= form_field form, :terms_summary, type: :text_area, label: "Terms Summary", rows: 3, placeholder: "Brief summary of key deal terms..." %>
+
+    <%= form_field form, :notes, type: :text_area, label: "Notes", rows: 3, placeholder: "Internal notes about the deal..." %>
+  </fieldset>
+
+  <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+    <%= secondary_button "Cancel", url: deal.persisted? ? deal_path(deal) : deals_path %>
+    <%= form.submit deal.persisted? ? "Update Deal" : "Create Deal", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+  </div>
+<% end %>

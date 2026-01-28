@@ -1,0 +1,23 @@
+<div class="mb-4">
+  <%= form_with url: agents_path, method: :get, class: "flex gap-2", data: { turbo_frame: "_top" } do |form| %>
+    <%= hidden_field_tag :status, params[:status] if params[:status].present? %>
+    <%= hidden_field_tag :genre, params[:genre] if params[:genre].present? %>
+    <%= hidden_field_tag :group_by, params[:group_by] if params[:group_by].present? %>
+
+    <div class="flex-1">
+      <%= form.search_field :search,
+        value: params[:search],
+        placeholder: "Search agents by name or agency...",
+        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
+        data: { testid: "search-input" } %>
+    </div>
+
+    <%= form.submit "Search", class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+
+    <% if params[:search].present? %>
+      <%= link_to "Clear",
+        agents_path(status: params[:status], genre: params[:genre], group_by: params[:group_by]),
+        class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50" %>
+    <% end %>
+  <% end %>
+</div>

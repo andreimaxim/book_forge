@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "modal" do %>
+  <%= render "shared/modal", title: "New Author" do %>
+    <%= render "form", author: @author %>
+  <% end %>
+<% end %>

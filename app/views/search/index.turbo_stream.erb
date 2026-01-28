@@ -1,0 +1,42 @@
+<%= turbo_stream.update "search-suggestions" do %>
+  <% if @query.present? && @total_count > 0 %>
+    <% @grouped_results.each do |type, results| %>
+      <div class="px-2 pt-2">
+        <p class="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"><%= type.pluralize %></p>
+      </div>
+      <% results.first(5).each do |result| %>
+        <%
+          record = result[:record]
+          path = case result[:type]
+                 when "Author" then author_path(record)
+                 when "Publisher" then publisher_path(record)
+                 when "Agent" then agent_path(record)
+                 when "Prospect" then prospect_path(record)
+                 when "Book" then book_path(record)
+                 when "Deal" then deal_path(record)
+                 end
+        %>
+        <%= link_to path,
+          class: "flex items-center gap-3 px-4 py-2 hover:bg-gray-100 transition-colors rounded-md mx-1",
+          data: { testid: "search-suggestion", action: "keydown.enter->search#navigateToResult" } do %>
+          <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-100 text-gray-500 text-xs font-medium flex-shrink-0">
+            <%= result[:type][0..1] %>
+          </span>
+          <span class="text-sm text-gray-900 truncate"><%= result[:highlight].html_safe %></span>
+          <span class="text-xs text-gray-400 ml-auto flex-shrink-0"><%= result[:type] %></span>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <div class="px-4 py-2 border-t border-gray-100">
+      <%= link_to "View all #{@total_count} results",
+        search_path(q: @query),
+        class: "text-sm text-blue-600 hover:text-blue-800",
+        data: { testid: "search-view-all" } %>
+    </div>
+  <% elsif @query.present? %>
+    <div class="px-4 py-6 text-center text-sm text-gray-500">
+      No results found for "<%= @query %>"
+    </div>
+  <% end %>
+<% end %>

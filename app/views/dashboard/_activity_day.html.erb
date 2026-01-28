@@ -1,0 +1,16 @@
+<div data-testid="activity-day-group" class="mb-6">
+  <h3 data-testid="activity-day-header" class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+    <% if day == Date.current %>
+      Today
+    <% elsif day == Date.current - 1.day %>
+      Yesterday
+    <% else %>
+      <%= day.strftime("%B %d, %Y") %>
+    <% end %>
+  </h3>
+  <div class="space-y-0">
+    <% activities.each_with_index do |activity, index| %>
+      <%= render "dashboard/activity_item", activity: activity, last: index == activities.size - 1 %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="mb-4 flex flex-wrap gap-4 items-center">
+  <span class="text-sm text-gray-500">Filter by:</span>
+
+  <%# Status filter %>
+  <div class="flex gap-2 flex-wrap">
+    <% Book::STATUSES.each do |status| %>
+      <%= link_to status.humanize,
+        books_path(status: status, genre: params[:genre], author_id: params[:author_id], search: params[:search], view: params[:view]),
+        class: "px-3 py-1 rounded-full text-sm #{params[:status] == status ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}",
+        data: { testid: "filter-status-#{status}" } %>
+    <% end %>
+
+    <% if params[:status].present? %>
+      <%= link_to "Clear",
+        books_path(genre: params[:genre], author_id: params[:author_id], search: params[:search], view: params[:view]),
+        class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200" %>
+    <% end %>
+  </div>
+
+  <%# Genre filter %>
+  <% genres = Book.distinct.pluck(:genre).compact.sort %>
+  <% if genres.any? %>
+    <span class="text-gray-300">|</span>
+    <div class="flex gap-2 flex-wrap">
+      <% genres.each do |genre| %>
+        <%= link_to genre,
+          books_path(genre: genre, status: params[:status], author_id: params[:author_id], search: params[:search], view: params[:view]),
+          class: "px-3 py-1 rounded-full text-sm #{params[:genre] == genre ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}",
+          data: { testid: "filter-genre-#{genre.parameterize}" } %>
+      <% end %>
+
+      <% if params[:genre].present? %>
+        <%= link_to "Clear",
+          books_path(status: params[:status], author_id: params[:author_id], search: params[:search], view: params[:view]),
+          class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200" %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%# Author filter (shows if filtering by author) %>
+  <% if params[:author_id].present? %>
+    <span class="text-gray-300">|</span>
+    <div class="flex gap-2">
+      <% author = Author.find_by(id: params[:author_id]) %>
+      <% if author %>
+        <span class="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
+          Author: <%= author.full_name %>
+        </span>
+        <%= link_to "Clear",
+          books_path(status: params[:status], genre: params[:genre], search: params[:search], view: params[:view]),
+          class: "px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

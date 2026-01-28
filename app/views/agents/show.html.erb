@@ -1,0 +1,135 @@
+<div class="w-full">
+  <div class="mb-6">
+    <%= link_to "&larr; Back to Agents".html_safe, agents_path, class: "text-blue-600 hover:text-blue-800 text-sm" %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="px-6 py-5 border-b border-gray-200">
+      <div class="flex justify-between items-start">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 h-16 w-16">
+            <div class="h-16 w-16 rounded-full bg-indigo-100 flex items-center justify-center">
+              <span class="text-xl font-medium text-indigo-700"><%= @agent.first_name[0] %><%= @agent.last_name[0] %></span>
+            </div>
+          </div>
+          <div class="ml-4">
+            <h1 class="text-2xl font-bold text-gray-900"><%= @agent.full_name %></h1>
+            <% if @agent.agency_name.present? %>
+              <p class="text-sm text-gray-500"><%= @agent.agency_name %></p>
+            <% end %>
+            <div class="mt-1">
+              <%= badge @agent.status.humanize, status: @agent.status.to_sym %>
+              <span data-testid="agent-status" class="sr-only"><%= @agent.status %></span>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <%= secondary_button "Edit", url: edit_agent_path(@agent) %>
+          <%= danger_button "Delete", url: agent_path(@agent), confirm: "Are you sure you want to delete #{@agent.full_name}?", data: { turbo_method: :delete } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 py-5">
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Email</dt>
+          <dd class="mt-1 text-sm text-gray-900" data-testid="agent-email"><%= @agent.email || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Phone</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @agent.phone || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Agency</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @agent.agency_name || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Agency Website</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <% if @agent.agency_website.present? %>
+              <%= link_to @agent.agency_website, @agent.agency_website, target: "_blank", rel: "noopener noreferrer", class: "text-blue-600 hover:text-blue-800" %>
+            <% else %>
+              -
+            <% end %>
+          </dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Commission Rate</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @agent.commission_rate ? "#{@agent.commission_rate}%" : "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Status</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @agent.status.humanize %></dd>
+        </div>
+
+        <div class="sm:col-span-2">
+          <dt class="text-sm font-medium text-gray-500">Genres Represented</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <% if @agent.genres_array.any? %>
+              <div class="flex flex-wrap gap-2">
+                <% @agent.genres_array.each do |genre| %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                    <%= genre %>
+                  </span>
+                <% end %>
+              </div>
+            <% else %>
+              -
+            <% end %>
+          </dd>
+        </div>
+
+        <div class="sm:col-span-2">
+          <dt class="text-sm font-medium text-gray-500">Address</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <% if @agent.address_line1.present? %>
+              <%= @agent.address_line1 %><br>
+              <% if @agent.address_line2.present? %><%= @agent.address_line2 %><br><% end %>
+              <%= [@agent.city, @agent.state, @agent.postal_code].compact.join(", ") %>
+              <% if @agent.country.present? && @agent.country != "USA" %><br><%= @agent.country %><% end %>
+            <% else %>
+              -
+            <% end %>
+          </dd>
+        </div>
+
+        <div class="sm:col-span-2">
+          <dt class="text-sm font-medium text-gray-500">Notes</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @agent.notes || "-" %></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <%# Tab Navigation %>
+  <div class="mt-6 bg-white rounded-lg shadow overflow-hidden" data-controller="tabs" data-tabs-active-class="border-blue-500 text-blue-600" data-tabs-inactive-class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+    <div class="border-b border-gray-200">
+      <nav class="-mb-px flex" data-testid="agent-tabs">
+        <a href="#authors" class="border-b-2 border-blue-500 text-blue-600 py-4 px-6 text-sm font-medium" data-tabs-target="tab" data-action="click->tabs#switch" data-tab="authors">
+          Authors
+        </a>
+        <a href="#deals" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-4 px-6 text-sm font-medium" data-tabs-target="tab" data-action="click->tabs#switch" data-tab="deals">
+          Deals
+        </a>
+      </nav>
+    </div>
+
+    <%# Tab Content %>
+    <div>
+      <div data-testid="authors-tab-content" data-tabs-target="panel" data-panel="authors" class="p-6">
+        <% representation = @representation || @agent.representations.build %>
+        <%= render "representations/list", parent: @agent, representations: @agent.representations.includes(:author).order(primary: :desc, start_date: :desc), representation: representation %>
+      </div>
+
+      <div data-testid="deals-tab-content" data-tabs-target="panel" data-panel="deals" class="p-6 hidden">
+        <%= render "agents/deals_tab", agent: @agent, deals: @deals %>
+      </div>
+    </div>
+  </div>
+</div>

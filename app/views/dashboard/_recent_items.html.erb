@@ -1,0 +1,44 @@
+<div class="mb-8" data-testid="recent-items">
+  <h2 class="text-lg font-medium text-gray-900 mb-4">Recent Activity</h2>
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <% if recent_items.empty? %>
+      <div class="px-5 py-12 text-center">
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="mt-2 text-sm text-gray-500">No recent activity yet.</p>
+      </div>
+    <% else %>
+      <ul class="divide-y divide-gray-200">
+        <% recent_items.each do |item| %>
+          <li>
+            <a href="<%= item[:path] %>" class="block hover:bg-gray-50 px-5 py-4 transition-colors" data-testid="recent-item">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center min-w-0">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                    <% case item[:type] %>
+                    <% when 'Author' %>
+                      bg-purple-100 text-purple-800
+                    <% when 'Book' %>
+                      bg-blue-100 text-blue-800
+                    <% when 'Deal' %>
+                      bg-green-100 text-green-800
+                    <% when 'Prospect' %>
+                      bg-yellow-100 text-yellow-800
+                    <% else %>
+                      bg-gray-100 text-gray-800
+                    <% end %>
+                  ">
+                    <%= item[:type] %>
+                  </span>
+                  <span class="ml-3 text-sm font-medium text-gray-900 truncate"><%= item[:name] %></span>
+                </div>
+                <span class="ml-4 text-xs text-gray-500 whitespace-nowrap"><%= time_ago_in_words(item[:updated_at]) %> ago</span>
+              </div>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

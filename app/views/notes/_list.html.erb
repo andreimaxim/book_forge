@@ -1,0 +1,20 @@
+<div class="space-y-4" data-testid="notes-section">
+  <%# Form to add new note %>
+  <div class="bg-gray-50 rounded-lg p-4">
+    <%= render "notes/form", notable: notable, note: Note.new(notable: notable) %>
+  </div>
+
+  <%# List of notes %>
+  <div id="notes-list" class="bg-white rounded-lg border border-gray-200">
+    <% if notes.any? %>
+      <% notes.each do |note| %>
+        <%= render "notes/note", note: note %>
+      <% end %>
+    <% else %>
+      <div class="text-center py-8 text-gray-500" data-testid="notes-empty-state">
+        <p class="text-sm">No notes yet.</p>
+        <p class="text-xs mt-1">Use the form above to add a note.</p>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="flex-1 max-w-md">
+  <h1 class="text-2xl font-bold text-gray-900">Toast Test</h1>
+  <p class="mt-2 text-gray-600">Tests toast notification appearance and dismissal.</p>
+
+  <div class="mt-6" data-controller="toast">
+    <button type="button"
+            data-action="click->toast#show"
+            data-toast-message="Operation successful"
+            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+      Show Toast
+    </button>
+
+    <div data-toast-target="container"
+         class="fixed bottom-5 right-5 z-50 space-y-2 max-w-sm">
+    </div>
+  </div>
+</div>

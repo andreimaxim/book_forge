@@ -1,0 +1,61 @@
+<div class="w-full">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">
+      Activities
+      <% if @trackable %>
+        <span class="text-gray-500 font-normal text-lg">for <%= @trackable.class.name %></span>
+      <% end %>
+    </h1>
+  </div>
+
+  <%= render "filters" %>
+
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <% if @activities.any? %>
+      <%= render "timeline", activities: @activities %>
+
+      <% if @total_pages > 1 %>
+        <div class="px-6 py-4 border-t border-gray-200">
+          <nav class="flex items-center justify-between">
+            <div class="text-sm text-gray-500">
+              Showing page <%= @page %> of <%= @total_pages %> (<%= @total_count %> total activities)
+            </div>
+            <div class="flex space-x-2">
+              <% if @page > 1 %>
+                <%= link_to "Previous",
+                    activities_path(
+                      trackable_type: params[:trackable_type],
+                      trackable_id: params[:trackable_id],
+                      action_type: params[:action_type],
+                      start_date: params[:start_date],
+                      end_date: params[:end_date],
+                      page: @page - 1
+                    ),
+                    class: "px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50",
+                    data: { testid: "pagination-prev" } %>
+              <% end %>
+              <% if @page < @total_pages %>
+                <%= link_to "Next",
+                    activities_path(
+                      trackable_type: params[:trackable_type],
+                      trackable_id: params[:trackable_id],
+                      action_type: params[:action_type],
+                      start_date: params[:start_date],
+                      end_date: params[:end_date],
+                      page: @page + 1
+                    ),
+                    class: "px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50",
+                    data: { testid: "pagination-next" } %>
+              <% end %>
+            </div>
+          </nav>
+        </div>
+      <% end %>
+    <% else %>
+      <%= empty_state(
+        icon: "inbox",
+        message: "No activities found for this record."
+      ) %>
+    <% end %>
+  </div>
+</div>

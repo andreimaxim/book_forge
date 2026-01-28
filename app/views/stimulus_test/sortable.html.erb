@@ -1,0 +1,33 @@
+<div class="flex-1 max-w-md">
+  <h1 class="text-2xl font-bold text-gray-900">Sortable Test</h1>
+  <p class="mt-2 text-gray-600">Tests drag-and-drop reordering of list items.</p>
+
+  <div class="mt-6" data-controller="sortable" data-sortable-url-value="<%= stimulus_test_sortable_path %>">
+    <ul data-sortable-target="list" class="space-y-2">
+      <li data-testid="sortable-item" data-sortable-id="1" draggable="true"
+          data-action="dragstart->sortable#dragstart dragover->sortable#dragover dragend->sortable#dragend drop->sortable#drop"
+          class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-md cursor-move hover:bg-gray-50">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
+        </svg>
+        <span>Item 1</span>
+      </li>
+      <li data-testid="sortable-item" data-sortable-id="2" draggable="true"
+          data-action="dragstart->sortable#dragstart dragover->sortable#dragover dragend->sortable#dragend drop->sortable#drop"
+          class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-md cursor-move hover:bg-gray-50">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
+        </svg>
+        <span>Item 2</span>
+      </li>
+      <li data-testid="sortable-item" data-sortable-id="3" draggable="true"
+          data-action="dragstart->sortable#dragstart dragover->sortable#dragover dragend->sortable#dragend drop->sortable#drop"
+          class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-md cursor-move hover:bg-gray-50">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
+        </svg>
+        <span>Item 3</span>
+      </li>
+    </ul>
+  </div>
+</div>

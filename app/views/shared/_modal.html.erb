@@ -1,0 +1,21 @@
+<div data-testid="modal-container" data-controller="modal" data-action="keydown.esc->modal#close" class="fixed inset-0 z-50 overflow-y-auto">
+  <div class="flex min-h-screen items-center justify-center px-4 pt-4 pb-20">
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" data-action="click->modal#close"></div>
+
+    <!-- Modal panel -->
+    <div class="relative w-full max-w-2xl transform rounded-lg bg-white shadow-xl transition-all">
+      <div class="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
+        <h2 class="text-xl font-bold text-gray-900"><%= title %></h2>
+        <button type="button" data-action="click->modal#close" class="rounded-md text-gray-400 hover:text-gray-500 focus:outline-none" aria-label="Close modal">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="px-6 py-5">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</div>

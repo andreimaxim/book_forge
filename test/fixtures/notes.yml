@@ -1,0 +1,114 @@
+# Pinned note on an author
+author_pinned_note:
+  notable_type: Author
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:jane_austen) %>
+  content: "Jane Austen is our highest priority author. Ensure all manuscripts receive expedited review."
+  pinned: true
+  created_at: <%= 3.days.ago.to_fs(:db) %>
+  updated_at: <%= 3.days.ago.to_fs(:db) %>
+
+# Regular note on an author
+author_regular_note:
+  notable_type: Author
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:jane_austen) %>
+  content: "Discussed new manuscript ideas over lunch. She is considering a **gothic romance** set in the Lake District."
+  pinned: false
+  created_at: <%= 1.day.ago.to_fs(:db) %>
+  updated_at: <%= 1.day.ago.to_fs(:db) %>
+
+# Older note on the same author
+author_old_note:
+  notable_type: Author
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:jane_austen) %>
+  content: "Initial meeting went well. Author is enthusiastic about new projects."
+  pinned: false
+  created_at: <%= 1.week.ago.to_fs(:db) %>
+  updated_at: <%= 1.week.ago.to_fs(:db) %>
+
+# Note on a publisher
+publisher_note:
+  notable_type: Publisher
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:penguin_random_house) %>
+  content: "Penguin has expressed interest in expanding their romance imprint. Follow up with contact."
+  pinned: false
+  created_at: <%= 2.days.ago.to_fs(:db) %>
+  updated_at: <%= 2.days.ago.to_fs(:db) %>
+
+# Note on a book
+book_note:
+  notable_type: Book
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:pride_and_prejudice) %>
+  content: |
+    ## Revision Notes
+
+    - Chapter 3 needs stronger opening
+    - Consider adding *more dialogue* in Part 2
+    - Final chapter is excellent
+  pinned: false
+  created_at: <%= 12.hours.ago.to_fs(:db) %>
+  updated_at: <%= 12.hours.ago.to_fs(:db) %>
+
+# Pinned note on a deal
+deal_pinned_note:
+  notable_type: Deal
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:pride_and_prejudice_deal) %>
+  content: "Critical: contract review deadline is next Friday. Do not miss this."
+  pinned: true
+  created_at: <%= 6.hours.ago.to_fs(:db) %>
+  updated_at: <%= 6.hours.ago.to_fs(:db) %>
+
+# Note on an agent
+agent_note:
+  notable_type: Agent
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:simon_lipskar) %>
+  content: "Simon mentioned he is looking for more science fiction manuscripts. Pass along any new submissions."
+  pinned: false
+  created_at: <%= 4.days.ago.to_fs(:db) %>
+  updated_at: <%= 4.days.ago.to_fs(:db) %>
+
+# Note on a prospect
+prospect_note:
+  notable_type: Prospect
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:evaluating_prospect) %>
+  content: "Manuscript shows promise but needs work on pacing. Schedule a follow-up call."
+  pinned: false
+  created_at: <%= 5.days.ago.to_fs(:db) %>
+  updated_at: <%= 5.days.ago.to_fs(:db) %>
+
+# Note with markdown content for rendering tests
+markdown_note:
+  notable_type: Author
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:stephen_king) %>
+  content: |
+    # Meeting Notes
+
+    Met with Stephen to discuss **new horror novel**. Key points:
+
+    - Working title: *The Dark Tower Returns*
+    - Expected word count: ~120,000
+    - Target completion: Q3 2026
+
+    > "This will be my most ambitious work yet." - Stephen King
+
+    See [project details](https://example.com) for more info.
+  pinned: false
+  created_at: <%= 2.hours.ago.to_fs(:db) %>
+  updated_at: <%= 2.hours.ago.to_fs(:db) %>
+
+# Note with potentially dangerous HTML content (for sanitization testing)
+xss_note:
+  notable_type: Author
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:stephen_king) %>
+  content: 'Author feedback: <script>alert("xss")</script> and <img src=x onerror=alert(1)> end of note.'
+  pinned: false
+  created_at: <%= 1.hour.ago.to_fs(:db) %>
+  updated_at: <%= 1.hour.ago.to_fs(:db) %>
+
+# Long note for preview testing
+long_note:
+  notable_type: Book
+  notable_id: <%= ActiveRecord::FixtureSet.identify(:the_shining) %>
+  content: "This is a very long note that contains extensive details about the book review process. It includes multiple paragraphs of analysis, commentary on the plot structure, character development observations, and recommendations for editorial changes that should be considered before the final manuscript is submitted to the publisher for production."
+  pinned: false
+  created_at: <%= 30.minutes.ago.to_fs(:db) %>
+  updated_at: <%= 30.minutes.ago.to_fs(:db) %>

@@ -1,0 +1,15 @@
+<%= form_with url: publishers_path, method: :get, class: "mb-4", data: { turbo_frame: "_top" } do |form| %>
+  <div class="flex gap-2">
+    <%= form.text_field :search,
+      value: params[:search],
+      placeholder: "Search publishers by name...",
+      class: "flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
+      data: { testid: "search-input" } %>
+    <%= form.hidden_field :size, value: params[:size] %>
+    <%= form.hidden_field :status, value: params[:status] %>
+    <%= form.submit "Search", class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    <% if params[:search].present? %>
+      <%= link_to "Clear", publishers_path(size: params[:size], status: params[:status]), class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50" %>
+    <% end %>
+  </div>
+<% end %>

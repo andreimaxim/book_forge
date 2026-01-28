@@ -1,0 +1,27 @@
+<%= turbo_frame_tag dom_id(note) do %>
+  <div class="py-4 px-4 border-b border-gray-200 last:border-b-0" data-testid="note-edit-form">
+    <%= form_with model: note, url: note_path(note), method: :patch, class: "space-y-3" do |form| %>
+      <% if note.errors.any? %>
+        <div class="rounded-md bg-red-50 p-4">
+          <div class="text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% note.errors.full_messages.each do |message| %>
+                <li class="text-red-600"><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+
+      <div>
+        <label for="note_content" class="block text-sm font-medium text-gray-700">Edit note</label>
+        <%= form.text_area :content, rows: 3, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm", placeholder: "Write your note here... (Markdown supported)" %>
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <%= link_to "Cancel", note_path(note), class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50", data: { turbo_frame: dom_id(note) } %>
+        <%= form.submit "Save", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

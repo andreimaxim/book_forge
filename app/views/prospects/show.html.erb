@@ -1,0 +1,201 @@
+<div class="w-full">
+  <div class="mb-6">
+    <%= link_to "&larr; Back to Prospects".html_safe, prospects_path, class: "text-blue-600 hover:text-blue-800 text-sm" %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="px-6 py-5 border-b border-gray-200">
+      <div class="flex justify-between items-start">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 h-16 w-16">
+            <div class="h-16 w-16 rounded-full bg-purple-100 flex items-center justify-center">
+              <span class="text-xl font-medium text-purple-700"><%= @prospect.first_name[0] %><%= @prospect.last_name[0] %></span>
+            </div>
+          </div>
+          <div class="ml-4">
+            <h1 class="text-2xl font-bold text-gray-900"><%= @prospect.full_name %></h1>
+            <% if @prospect.project_title.present? %>
+              <p class="text-sm text-gray-500"><%= @prospect.project_title %></p>
+            <% end %>
+            <div class="mt-1">
+              <%= badge @prospect.stage.humanize, status: @prospect.stage.to_sym %>
+              <span data-testid="prospect-stage" class="sr-only"><%= @prospect.stage %></span>
+              <% if @prospect.source.present? %>
+                <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  <%= @prospect.source.humanize %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <% unless %w[converted declined].include?(@prospect.stage) %>
+            <% if @prospect.stage == "negotiating" %>
+              <%= form_with url: convert_prospect_path(@prospect), method: :post, class: "inline" do %>
+                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                  Convert to Author
+                </button>
+              <% end %>
+            <% end %>
+            <button type="button" onclick="document.getElementById('decline-modal').classList.remove('hidden')" class="inline-flex items-center px-4 py-2 border border-red-300 text-sm font-medium rounded-md shadow-sm text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+              Decline
+            </button>
+          <% end %>
+          <%= secondary_button "Edit", url: edit_prospect_path(@prospect) %>
+          <%= danger_button "Delete", url: prospect_path(@prospect), confirm: "Are you sure you want to delete #{@prospect.full_name}?", data: { turbo_method: :delete } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 py-5">
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Email</dt>
+          <dd class="mt-1 text-sm text-gray-900" data-testid="prospect-email"><%= @prospect.email || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Phone</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @prospect.phone || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Source</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @prospect.source&.humanize || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Stage</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @prospect.stage.humanize %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Assigned Agent</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <% if @prospect.agent %>
+              <%= link_to @prospect.agent.full_name, agent_path(@prospect.agent), class: "text-blue-600 hover:text-blue-800" %>
+            <% else %>
+              <span class="text-gray-500">Unassigned</span>
+            <% end %>
+          </dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Days in Current Stage</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @prospect.days_in_current_stage %> days</dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Genre Interest</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @prospect.genre_interest || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Estimated Word Count</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @prospect.estimated_word_count&.to_fs(:delimited) || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Last Contact Date</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @prospect.last_contact_date&.strftime("%B %d, %Y") || "-" %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Follow Up Date</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <% if @prospect.follow_up_date %>
+              <% if @prospect.follow_up_date < Date.today %>
+                <span class="text-red-600 font-medium">Overdue: <%= @prospect.follow_up_date.strftime("%B %d, %Y") %></span>
+              <% elsif @prospect.follow_up_date == Date.today %>
+                <span class="text-yellow-600 font-medium">Today</span>
+              <% else %>
+                <%= @prospect.follow_up_date.strftime("%B %d, %Y") %>
+              <% end %>
+            <% else %>
+              -
+            <% end %>
+          </dd>
+        </div>
+
+        <div class="sm:col-span-2">
+          <dt class="text-sm font-medium text-gray-500">Project Title</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @prospect.project_title || "-" %></dd>
+        </div>
+
+        <div class="sm:col-span-2">
+          <dt class="text-sm font-medium text-gray-500">Project Description</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @prospect.project_description || "-" %></dd>
+        </div>
+
+        <% if @prospect.decline_reason.present? %>
+          <div class="sm:col-span-2">
+            <dt class="text-sm font-medium text-gray-500">Decline Reason</dt>
+            <dd class="mt-1 text-sm text-red-600"><%= @prospect.decline_reason %></dd>
+          </div>
+        <% end %>
+
+        <div class="sm:col-span-2">
+          <dt class="text-sm font-medium text-gray-500">Notes</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @prospect.notes || "-" %></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <%# Stage Progression %>
+  <% unless @prospect.stage == "converted" || @prospect.stage == "declined" %>
+    <div class="mt-6 bg-white rounded-lg shadow overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-medium text-gray-900">Stage Progression</h2>
+      </div>
+      <div class="px-6 py-4">
+        <div class="flex items-center justify-between">
+          <% Prospect::STAGES.reject { |s| %w[converted declined].include?(s) }.each_with_index do |stage, index| %>
+            <% is_current = @prospect.stage == stage %>
+            <% is_past = Prospect::STAGES.index(@prospect.stage) > Prospect::STAGES.index(stage) %>
+            <div class="flex items-center">
+              <div class="<%= is_current ? 'bg-blue-600' : (is_past ? 'bg-green-600' : 'bg-gray-300') %> rounded-full h-8 w-8 flex items-center justify-center">
+                <% if is_past %>
+                  <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                <% else %>
+                  <span class="text-white text-sm font-medium"><%= index + 1 %></span>
+                <% end %>
+              </div>
+              <span class="ml-2 text-sm <%= is_current ? 'font-semibold text-blue-600' : (is_past ? 'text-green-600' : 'text-gray-500') %>">
+                <%= stage.humanize %>
+              </span>
+            </div>
+            <% unless index == Prospect::STAGES.reject { |s| %w[converted declined].include?(s) }.length - 1 %>
+              <div class="flex-1 h-0.5 mx-4 <%= is_past ? 'bg-green-600' : 'bg-gray-300' %>"></div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%# Decline Modal %>
+<div id="decline-modal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h3 class="text-lg font-medium text-gray-900">Decline Prospect</h3>
+    </div>
+    <%= form_with url: decline_prospect_path(@prospect), method: :patch do |form| %>
+      <div class="px-6 py-4">
+        <label for="decline_reason" class="block text-sm font-medium text-gray-700 mb-2">Reason for declining</label>
+        <textarea name="decline_reason" id="decline_reason" rows="4" required class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Please provide a reason..."></textarea>
+      </div>
+      <div class="px-6 py-4 bg-gray-50 flex justify-end gap-3">
+        <button type="button" onclick="document.getElementById('decline-modal').classList.add('hidden')" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50">
+          Cancel
+        </button>
+        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+          Decline Prospect
+        </button>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<div class="space-y-8">
+  <% grouped_results.each do |type, results| %>
+    <%= render "result_group", type: type, results: results %>
+  <% end %>
+</div>

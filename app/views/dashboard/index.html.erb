@@ -1,0 +1,55 @@
+<div class="flex-1 w-full">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+    <p class="mt-1 text-sm text-gray-600">Welcome to BookForge - Your Book Publishing CRM</p>
+  </div>
+
+  <%# Metric Cards %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <%= render "dashboard/metric_card",
+      testid: "metric-active-authors",
+      label: "Active Authors",
+      value: @active_authors,
+      icon: "users" %>
+
+    <%= render "dashboard/metric_card",
+      testid: "metric-active-deals",
+      label: "Active Deals",
+      value: @active_deals,
+      icon: "briefcase" %>
+
+    <%= render "dashboard/metric_card",
+      testid: "metric-deals-this-month",
+      label: "Deals This Month",
+      value: @deals_this_month,
+      icon: "trending-up",
+      change: @deals_count_change %>
+
+    <%= render "dashboard/metric_card",
+      testid: "metric-total-advance",
+      label: "Advances This Month",
+      value: number_to_currency(@total_advance_month, precision: 0),
+      icon: "dollar",
+      change: @advance_change %>
+
+    <%= render "dashboard/metric_card",
+      testid: "metric-conversion-rate",
+      label: "Conversion Rate",
+      value: "#{@conversion_rate}%",
+      icon: "chart" %>
+  </div>
+
+  <%# Quick Actions %>
+  <%= render "dashboard/quick_actions" %>
+
+  <%# Pipeline Summary %>
+  <%= render "dashboard/pipeline_summary",
+    books_by_status: @books_by_status,
+    deals_by_status: @deals_by_status %>
+
+  <%# Activity Timeline %>
+  <%= render "dashboard/activity_timeline" %>
+
+  <%# Recent Items %>
+  <%= render "dashboard/recent_items", recent_items: @recent_items %>
+</div>

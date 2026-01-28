@@ -1,0 +1,75 @@
+<div class="space-y-4">
+  <%# Quick Add Button %>
+  <div class="flex justify-end">
+    <%= link_to new_deal_path(book_id: book.id), class: "inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" do %>
+      <svg class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      Add Deal
+    <% end %>
+  </div>
+
+  <%# Deals List %>
+  <% if deals.any? %>
+    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Publisher</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Advance</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Offer Date</th>
+            <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% deals.each do |deal| %>
+            <tr data-testid="deal-row">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <%= link_to deal.publisher.name, publisher_path(deal.publisher), class: "text-sm font-medium text-gray-900 hover:text-blue-600" %>
+                <% if deal.publisher.imprint.present? %>
+                  <div class="text-xs text-gray-500">(<%= deal.publisher.imprint %>)</div>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                  <%= deal.deal_type.humanize %>
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <%= deal.formatted_advance %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <%= badge deal.status.humanize, status: deal.status.to_sym %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <% if deal.agent %>
+                  <%= link_to deal.agent.full_name, agent_path(deal.agent), class: "hover:text-blue-600" %>
+                <% else %>
+                  <span class="text-gray-400">-</span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= deal.offer_date&.strftime("%b %d, %Y") || "-" %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <%= link_to "View", deal_path(deal), class: "text-blue-600 hover:text-blue-800 mr-3" %>
+                <%= link_to "Edit", edit_deal_path(deal), class: "text-gray-600 hover:text-gray-800" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="text-center py-8 text-gray-500">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      <p class="mt-2 text-sm">No deals yet.</p>
+      <p class="text-xs mt-1">Click "Add Deal" to create a new deal for this book.</p>
+    </div>
+  <% end %>
+</div>

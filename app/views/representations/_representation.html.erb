@@ -1,0 +1,60 @@
+<%# parent is passed as a local variable %>
+<% parent ||= @parent %>
+<% is_author_parent = parent.is_a?(Author) %>
+
+<%= turbo_frame_tag dom_id(representation) do %>
+  <div class="flex items-center justify-between py-3 px-4 border-b border-gray-200 last:border-b-0" data-testid="representation-row">
+    <div class="flex items-center min-w-0">
+      <div class="flex-shrink-0 h-10 w-10">
+        <div class="h-10 w-10 rounded-full <%= is_author_parent ? 'bg-indigo-100' : 'bg-blue-100' %> flex items-center justify-center">
+          <% if is_author_parent %>
+            <span class="text-sm font-medium text-indigo-700"><%= representation.agent.first_name[0] %><%= representation.agent.last_name[0] %></span>
+          <% else %>
+            <span class="text-sm font-medium text-blue-700"><%= representation.author.initials %></span>
+          <% end %>
+        </div>
+      </div>
+      <div class="ml-3 min-w-0">
+        <% if is_author_parent %>
+          <%= link_to representation.agent.full_name, agent_path(representation.agent), class: "text-sm font-medium text-gray-900 hover:text-blue-600 truncate block" %>
+          <p class="text-xs text-gray-500"><%= representation.agent.agency_name %></p>
+        <% else %>
+          <%= link_to representation.author.full_name, author_path(representation.author), class: "text-sm font-medium text-gray-900 hover:text-blue-600 truncate block" %>
+          <p class="text-xs text-gray-500"><%= representation.author.genre_focus %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <% if representation.primary? %>
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+          Primary
+        </span>
+      <% end %>
+
+      <%= badge representation.status.humanize, status: representation.status.to_sym %>
+
+      <% if representation.start_date.present? %>
+        <span class="text-xs text-gray-500">
+          Since <%= representation.start_date.strftime("%b %Y") %>
+        </span>
+      <% end %>
+
+      <% if representation.current? %>
+        <div class="flex items-center gap-1">
+          <% if !representation.primary? %>
+            <% path = is_author_parent ? author_representation_path(parent, representation) : agent_representation_path(parent, representation) %>
+            <%= button_to "Set Primary", path, method: :patch, params: { representation: { primary: true } }, class: "text-xs text-blue-600 hover:text-blue-800", data: { turbo_frame: dom_id(representation) } %>
+          <% end %>
+
+          <% path = is_author_parent ? author_representation_path(parent, representation) : agent_representation_path(parent, representation) %>
+          <%= button_to "End", path, method: :delete, class: "text-xs text-red-600 hover:text-red-800", data: { turbo_confirm: "Are you sure you want to end this representation?" } %>
+        </div>
+      <% else %>
+        <span class="text-xs text-gray-400">
+          Ended <%= representation.end_date&.strftime("%b %Y") %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

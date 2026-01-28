@@ -1,0 +1,191 @@
+# Active agents from well-known agencies
+simon_lipskar:
+  first_name: Simon
+  last_name: Lipskar
+  email: simon.lipskar@writershouse.example.com
+  phone: "212-555-0101"
+  agency_name: Writers House
+  agency_website: https://writershouse.com
+  address_line1: "21 West 26th Street"
+  city: New York
+  state: NY
+  postal_code: "10010"
+  country: USA
+  commission_rate: 15.00
+  genres_represented: "Literary Fiction, Science Fiction, Fantasy"
+  notes: "Represents major authors including Brandon Sanderson"
+  status: active
+
+esther_newberg:
+  first_name: Esther
+  last_name: Newberg
+  email: esther.newberg@icm.example.com
+  phone: "212-555-0102"
+  agency_name: ICM Partners
+  agency_website: https://icmpartners.com
+  address_line1: "65 East 55th Street"
+  address_line2: "Floor 21"
+  city: New York
+  state: NY
+  postal_code: "10022"
+  country: USA
+  commission_rate: 15.00
+  genres_represented: "Literary Fiction, Nonfiction, Memoir"
+  notes: "One of the most powerful agents in publishing"
+  status: active
+
+jennifer_joel:
+  first_name: Jennifer
+  last_name: Joel
+  email: jennifer.joel@icm.example.com
+  phone: "212-555-0103"
+  agency_name: ICM Partners
+  agency_website: https://icmpartners.com
+  address_line1: "65 East 55th Street"
+  city: New York
+  state: NY
+  postal_code: "10022"
+  country: USA
+  commission_rate: 15.00
+  genres_represented: "Literary Fiction, Thrillers"
+  notes: "Known for representing bestselling authors"
+  status: active
+
+jennifer_rudolph_walsh:
+  first_name: Jennifer
+  last_name: Rudolph Walsh
+  email: jrwalsh@wmeagency.example.com
+  phone: "310-555-0104"
+  agency_name: WME (William Morris Endeavor)
+  agency_website: https://wmeagency.com
+  address_line1: "9601 Wilshire Boulevard"
+  city: Beverly Hills
+  state: CA
+  postal_code: "90210"
+  country: USA
+  commission_rate: 15.00
+  genres_represented: "Literary Fiction, Nonfiction, Celebrity Memoir"
+  notes: "Major Hollywood and publishing crossover agent"
+  status: active
+
+molly_friedrich:
+  first_name: Molly
+  last_name: Friedrich
+  email: molly.friedrich@friedrichagency.example.com
+  phone: "212-555-0105"
+  agency_name: The Friedrich Agency
+  agency_website: https://friedrichagency.com
+  address_line1: "136 East 57th Street"
+  address_line2: "Suite 1400"
+  city: New York
+  state: NY
+  postal_code: "10022"
+  country: USA
+  commission_rate: 15.00
+  genres_represented: "Literary Fiction, Nonfiction, Memoir"
+  notes: "Founded her own boutique agency"
+  status: active
+
+# Agent for genre-specific testing
+mystery_agent:
+  first_name: Sarah
+  last_name: Thompson
+  email: sarah.thompson@mysterylit.example.com
+  phone: "212-555-0106"
+  agency_name: Mystery Literary Agency
+  agency_website: https://mysterylit.example.com
+  address_line1: "100 Park Avenue"
+  city: New York
+  state: NY
+  postal_code: "10017"
+  country: USA
+  commission_rate: 15.00
+  genres_represented: "Mystery, Thriller, Crime Fiction"
+  notes: "Specializes in mystery and thriller genres"
+  status: active
+
+romance_agent:
+  first_name: Emily
+  last_name: Davis
+  email: emily.davis@romanceagency.example.com
+  phone: "212-555-0107"
+  agency_name: Romance Literary Agency
+  agency_website: https://romanceagency.example.com
+  address_line1: "200 Madison Avenue"
+  city: New York
+  state: NY
+  postal_code: "10016"
+  country: USA
+  commission_rate: 12.50
+  genres_represented: "Romance, Women's Fiction"
+  notes: "Focuses exclusively on romance and women's fiction"
+  status: active
+
+# Agent not accepting new clients
+not_accepting_agent:
+  first_name: Robert
+  last_name: Miller
+  email: robert.miller@closedlist.example.com
+  phone: "212-555-0108"
+  agency_name: Elite Literary Agency
+  agency_website: https://elitelit.example.com
+  address_line1: "500 Fifth Avenue"
+  city: New York
+  state: NY
+  postal_code: "10110"
+  country: USA
+  commission_rate: 15.00
+  genres_represented: "Literary Fiction, Historical Fiction"
+  notes: "Currently not accepting new queries"
+  status: not_accepting
+
+# Inactive agent
+inactive_agent:
+  first_name: Thomas
+  last_name: Wilson
+  email: thomas.wilson@retired.example.com
+  phone: "555-555-0109"
+  agency_name: Wilson Literary (Closed)
+  address_line1: "Former Address"
+  city: Chicago
+  state: IL
+  postal_code: "60601"
+  country: USA
+  commission_rate: 15.00
+  genres_represented: "General Fiction"
+  notes: "Retired from the industry"
+  status: inactive
+
+# Agent without email (to test optional email)
+agent_no_email:
+  first_name: Anonymous
+  last_name: Agent
+  email:
+  phone: "555-555-0110"
+  agency_name: Confidential Agency
+  city: Los Angeles
+  state: CA
+  postal_code: "90001"
+  country: USA
+  commission_rate: 15.00
+  genres_represented: "Various"
+  notes: "Prefers not to be contacted via email"
+  status: active
+
+# Agent with higher commission rate
+high_commission_agent:
+  first_name: Premium
+  last_name: Representative
+  email: premium.rep@highend.example.com
+  phone: "212-555-0111"
+  agency_name: Premium Literary Services
+  agency_website: https://premiumlit.example.com
+  address_line1: "One World Trade Center"
+  city: New York
+  state: NY
+  postal_code: "10007"
+  country: USA
+  commission_rate: 20.00
+  genres_represented: "Celebrity Memoir, High-Profile Nonfiction"
+  notes: "Handles high-profile clients with specialized services"
+  status: active

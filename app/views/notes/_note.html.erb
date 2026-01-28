@@ -1,0 +1,31 @@
+<%= turbo_frame_tag dom_id(note) do %>
+  <div class="py-4 px-4 border-b border-gray-200 last:border-b-0" data-testid="note-item">
+    <div class="flex items-start justify-between">
+      <div class="flex-1 min-w-0">
+        <% if note.pinned? %>
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 mb-2" data-testid="note-pinned-badge">
+            Pinned
+          </span>
+        <% end %>
+        <div class="prose prose-sm max-w-none text-gray-900" data-testid="note-content">
+          <%= note.rendered_content.html_safe %>
+        </div>
+        <p class="mt-2 text-xs text-gray-500" data-testid="note-timestamp">
+          <%= time_ago_in_words(note.created_at) %> ago
+          <% if note.updated_at > note.created_at + 1.minute %>
+            (edited)
+          <% end %>
+        </p>
+      </div>
+      <div class="ml-4 flex-shrink-0 flex items-center gap-2">
+        <%= button_to "Edit", edit_note_path(note), method: :get, class: "text-xs text-blue-600 hover:text-blue-800", data: { turbo_frame: dom_id(note) } %>
+        <% if note.pinned? %>
+          <%= button_to "Unpin", note_path(note), method: :patch, params: { note: { pinned: false } }, class: "text-xs text-gray-600 hover:text-gray-800", data: { turbo_frame: dom_id(note) } %>
+        <% else %>
+          <%= button_to "Pin", note_path(note), method: :patch, params: { note: { pinned: true } }, class: "text-xs text-yellow-600 hover:text-yellow-800", data: { turbo_frame: dom_id(note) } %>
+        <% end %>
+        <%= button_to "Delete", note_path(note), method: :delete, class: "text-xs text-red-600 hover:text-red-800", data: { turbo_confirm: "Are you sure you want to delete this note?" } %>
+      </div>
+    </div>
+  </div>
+<% end %>
