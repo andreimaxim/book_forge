@@ -9,7 +9,7 @@
       <%= form.select :stage,
         [["All Stages", ""]] + Prospect::STAGES.map { |s| [s.humanize, s] },
         { selected: params[:stage] },
-        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>
 
     <div>
@@ -17,7 +17,7 @@
       <%= form.select :source,
         [["All Sources", ""]] + Prospect::SOURCES.map { |s| [s.humanize, s] },
         { selected: params[:source] },
-        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>
 
     <div>
@@ -25,7 +25,7 @@
       <%= form.select :agent_id,
         [["All Agents", ""], ["Unassigned", "unassigned"]] + Agent.active.alphabetical.map { |a| [a.full_name, a.id] },
         { selected: params[:agent_id] },
-        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>
 
     <div>
@@ -33,7 +33,7 @@
       <%= form.select :follow_up,
         [["Any", ""], ["Today", "today"], ["This Week", "week"], ["Overdue", "overdue"]],
         { selected: params[:follow_up] },
-        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>
 
     <div class="flex gap-2">

@@ -9,7 +9,7 @@
       <%= form.text_field :search,
         value: params[:search],
         placeholder: "Search by book title or author...",
-        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>
 
     <div class="min-w-[150px]">
@@ -17,7 +17,7 @@
       <%= form.select :status,
         [["All Statuses", ""]] + Deal::STATUSES.map { |s| [s.humanize, s] },
         { selected: params[:status] },
-        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>
 
     <div class="min-w-[150px]">
@@ -25,7 +25,7 @@
       <%= form.select :deal_type,
         [["All Types", ""]] + Deal::DEAL_TYPES.map { |t| [t.humanize, t] },
         { selected: params[:deal_type] },
-        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>
 
     <div class="min-w-[150px]">
@@ -33,21 +33,21 @@
       <%= form.select :publisher_id,
         [["All Publishers", ""]] + Publisher.active.alphabetical.map { |p| [p.name, p.id] },
         { selected: params[:publisher_id] },
-        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>
 
     <div class="min-w-[130px]">
       <%= form.label :start_date, "From Date", class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= form.date_field :start_date,
         value: params[:start_date],
-        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>
 
     <div class="min-w-[130px]">
       <%= form.label :end_date, "To Date", class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= form.date_field :end_date,
         value: params[:end_date],
-        class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+        class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>
 
     <div class="flex gap-2">

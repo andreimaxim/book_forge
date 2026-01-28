@@ -73,12 +73,12 @@ class DashboardSystemTest < ApplicationSystemTestCase
     # Go back to dashboard
     visit root_path
 
-    # Click on Books link in quick actions
+    # Click on Books link in quick actions (opens modal)
     within "[data-testid='quick-actions']" do
       click_link "New Book"
     end
 
-    assert_selector "h1", text: "New Book"
+    assert_selector "h2", text: "New Book"
   end
 
   test "using quick action buttons" do
@@ -91,12 +91,12 @@ class DashboardSystemTest < ApplicationSystemTestCase
       assert_link "New Prospect"
     end
 
-    # Click on New Deal
+    # Click on New Deal (opens modal)
     within "[data-testid='quick-actions']" do
       click_link "New Deal"
     end
 
-    assert_selector "h1", text: "New Deal"
+    assert_selector "h2", text: "New Deal"
   end
 
   test "viewing recent items" do

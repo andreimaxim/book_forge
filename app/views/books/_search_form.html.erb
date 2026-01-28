@@ -1,18 +1,19 @@
-<%= form_with url: agents_path, method: :get, class: "mb-4", data: { turbo_frame: "_top" } do |form| %>
+<%= form_with url: books_path, method: :get, class: "mb-4", data: { turbo_frame: "_top" } do |form| %>
   <%= hidden_field_tag :status, params[:status] if params[:status].present? %>
   <%= hidden_field_tag :genre, params[:genre] if params[:genre].present? %>
-  <%= hidden_field_tag :group_by, params[:group_by] if params[:group_by].present? %>
+  <%= hidden_field_tag :author_id, params[:author_id] if params[:author_id].present? %>
+  <%= hidden_field_tag :view, params[:view] if params[:view].present? %>
 
   <div class="flex gap-2">
     <%= form.text_field :search,
       value: params[:search],
-      placeholder: "Search agents by name or agency...",
+      placeholder: "Search books by title, ISBN, or author...",
       class: "flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
       data: { testid: "search-input" } %>
     <%= form.submit "Search", class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
     <% if params[:search].present? %>
       <%= link_to "Clear",
-        agents_path(status: params[:status], genre: params[:genre], group_by: params[:group_by]),
+        books_path(status: params[:status], genre: params[:genre], author_id: params[:author_id], view: params[:view]),
         class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50" %>
     <% end %>
   </div>

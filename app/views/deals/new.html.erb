@@ -1,15 +1,23 @@
-<div class="w-full max-w-3xl mx-auto">
-  <div class="mb-6">
-    <%= link_to "&larr; Back to Deals".html_safe, deals_path, class: "text-blue-600 hover:text-blue-800 text-sm" %>
-  </div>
-
-  <div class="bg-white rounded-lg shadow overflow-hidden">
-    <div class="px-6 py-5 border-b border-gray-200">
-      <h1 class="text-2xl font-bold text-gray-900">New Deal</h1>
-    </div>
-
-    <div class="px-6 py-5">
+<% if turbo_frame_request_id == "modal" %>
+  <%= turbo_frame_tag "modal" do %>
+    <%= render "shared/modal", title: "New Deal" do %>
       <%= render "form", deal: @deal %>
+    <% end %>
+  <% end %>
+<% else %>
+  <div class="w-full max-w-3xl mx-auto">
+    <div class="mb-6">
+      <%= link_to "&larr; Back to Deals".html_safe, deals_path, class: "text-blue-600 hover:text-blue-800 text-sm" %>
+    </div>
+
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <div class="px-6 py-5 border-b border-gray-200">
+        <h1 class="text-2xl font-bold text-gray-900">New Deal</h1>
+      </div>
+
+      <div class="px-6 py-5">
+        <%= render "form", deal: @deal %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
