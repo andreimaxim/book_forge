@@ -100,14 +100,14 @@ class AuthorsController < ApplicationController
 
   def turbo_stream_for_update
     [
-      turbo_stream.replace(dom_id(@author), partial: "authors/author_detail", locals: { author: @author }),
+      turbo_stream.update(dom_id(@author), partial: "authors/author_detail", locals: { author: @author }),
       turbo_stream.update("flash-messages", partial: "shared/flash_message", locals: { type: "notice", message: "Author was successfully updated." })
     ]
   end
 
   def turbo_stream_for_update_errors
     [
-      turbo_stream.replace(dom_id(@author), partial: "authors/inline_edit_form", locals: { author: @author })
+      turbo_stream.update(dom_id(@author), partial: "authors/inline_edit_form", locals: { author: @author })
     ]
   end
 
