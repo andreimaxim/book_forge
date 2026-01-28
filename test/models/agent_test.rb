@@ -79,7 +79,7 @@ class AgentTest < ActiveSupport::TestCase
     assert_includes agent.errors[:commission_rate], "must be less than or equal to 100"
 
     # Test valid commission rates
-    [0, 15, 50, 100].each do |rate|
+    [ 0, 15, 50, 100 ].each do |rate|
       agent = Agent.new(
         first_name: "John",
         last_name: "Doe",
@@ -145,7 +145,7 @@ class AgentTest < ActiveSupport::TestCase
 
   test "returns genres as array" do
     agent = Agent.new(genres_represented: "Literary Fiction, Science Fiction, Fantasy")
-    expected = ["Literary Fiction", "Science Fiction", "Fantasy"]
+    expected = [ "Literary Fiction", "Science Fiction", "Fantasy" ]
     assert_equal expected, agent.genres_array
   end
 
@@ -159,7 +159,7 @@ class AgentTest < ActiveSupport::TestCase
 
   test "sets genres from array" do
     agent = Agent.new(first_name: "John", last_name: "Doe")
-    agent.genres_array = ["Mystery", "Thriller", "Crime Fiction"]
+    agent.genres_array = [ "Mystery", "Thriller", "Crime Fiction" ]
     assert_equal "Mystery, Thriller, Crime Fiction", agent.genres_represented
   end
 

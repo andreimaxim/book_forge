@@ -15,7 +15,7 @@ class CreateAuthors < ActiveRecord::Migration[8.1]
     end
 
     add_index :authors, :email, unique: true, where: "email IS NOT NULL"
-    add_index :authors, [:last_name, :first_name]
+    add_index :authors, [ :last_name, :first_name ]
     add_index :authors, :status
   end
 end

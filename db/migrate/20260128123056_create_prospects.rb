@@ -23,6 +23,6 @@ class CreateProspects < ActiveRecord::Migration[8.1]
     add_index :prospects, :stage
     add_index :prospects, :source
     add_index :prospects, :follow_up_date
-    add_index :prospects, [:last_name, :first_name]
+    add_index :prospects, [ :last_name, :first_name ]
   end
 end

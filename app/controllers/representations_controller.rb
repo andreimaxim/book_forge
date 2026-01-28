@@ -2,7 +2,7 @@ class RepresentationsController < ApplicationController
   include ActionView::RecordIdentifier
 
   before_action :set_parent
-  before_action :set_representation, only: [:update, :destroy]
+  before_action :set_representation, only: [ :update, :destroy ]
 
   def create
     @representation = @parent.representations.build(representation_params)

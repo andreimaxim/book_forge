@@ -1,0 +1,14 @@
+{
+  "ignored_warnings": [
+    {
+      "fingerprint": "20b868e2d5b4025eebfc79f68bedf7cff3e78da032a5948adbc08ed53f88a055",
+      "note": "URL is validated with protocol check in view and model-level format validation"
+    },
+    {
+      "fingerprint": "6fb0bb6b39ca5df66f39ac7c9ec789f76ba57a79c33de53b3a2b03e63a46a21a",
+      "note": "URL is validated with protocol check in view and model-level format validation"
+    }
+  ],
+  "updated": "2026-01-28",
+  "brakeman_version": "7.1.2"
+}

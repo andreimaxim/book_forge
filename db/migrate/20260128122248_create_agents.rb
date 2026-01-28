@@ -20,7 +20,7 @@ class CreateAgents < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :agents, [:last_name, :first_name]
+    add_index :agents, [ :last_name, :first_name ]
     add_index :agents, :agency_name
     add_index :agents, :status
     add_index :agents, :email, unique: true, where: "email IS NOT NULL"

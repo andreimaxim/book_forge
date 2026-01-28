@@ -15,7 +15,7 @@ class Author < ApplicationRecord
   validates :last_name, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validates :email, uniqueness: true, allow_blank: true
-  validates :website, format: { with: %r{\Ahttps?://} }, allow_blank: true
+  validates :website, format: { with: %r{\Ahttps?://\S+\z} }, allow_blank: true
   validates :status, inclusion: { in: STATUSES }
 
   # Scopes

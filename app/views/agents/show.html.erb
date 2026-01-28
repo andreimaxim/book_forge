@@ -50,8 +50,8 @@
         <div>
           <dt class="text-sm font-medium text-gray-500">Agency Website</dt>
           <dd class="mt-1 text-sm text-gray-900">
-            <% if @agent.agency_website.present? %>
-              <%= link_to @agent.agency_website, @agent.agency_website, target: "_blank", rel: "noopener noreferrer", class: "text-blue-600 hover:text-blue-800" %>
+            <% if @agent.agency_website.present? && @agent.agency_website.match?(%r{\Ahttps?://}) %>
+              <%= link_to @agent.agency_website, sanitize(@agent.agency_website), target: "_blank", rel: "noopener noreferrer", class: "text-blue-600 hover:text-blue-800" %>
             <% else %>
               -
             <% end %>

@@ -12,7 +12,7 @@ class Publisher < ApplicationRecord
   # Validations
   validates :name, presence: true
   validates :contact_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
-  validates :website, format: { with: %r{\Ahttps?://} }, allow_blank: true
+  validates :website, format: { with: %r{\Ahttps?://\S+\z} }, allow_blank: true
   validates :size, inclusion: { in: SIZES }, allow_blank: true
   validates :status, inclusion: { in: STATUSES }
 
@@ -54,7 +54,7 @@ class Publisher < ApplicationRecord
   def city_state_postal
     # Format: "City, State PostalCode"
     city_part = city
-    state_postal = [state, postal_code].compact_blank.join(" ")
+    state_postal = [ state, postal_code ].compact_blank.join(" ")
 
     if city_part.present? && state_postal.present?
       "#{city_part}, #{state_postal}"

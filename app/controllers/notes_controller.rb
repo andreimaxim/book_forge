@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
   include ActionView::RecordIdentifier
 
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_note, only: [ :show, :edit, :update, :destroy ]
 
   NOTABLE_TYPES = %w[Author Book Deal Publisher Agent Prospect].freeze
 

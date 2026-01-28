@@ -24,11 +24,12 @@ class ActivitiesController < ApplicationController
 
   private
 
+  ALLOWED_TRACKABLE_TYPES = %w[Author Agent Book Deal Prospect Publisher].freeze
+
   def find_trackable
     return nil unless params[:trackable_type].present? && params[:trackable_id].present?
+    return nil unless ALLOWED_TRACKABLE_TYPES.include?(params[:trackable_type])
 
     params[:trackable_type].constantize.find_by(id: params[:trackable_id])
-  rescue NameError
-    nil
   end
 end

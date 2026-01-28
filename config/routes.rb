@@ -17,16 +17,16 @@ Rails.application.routes.draw do
 
   # Dashboard namespace (activity timeline feed)
   namespace :dashboard do
-    resources :activities, only: [:index]
+    resources :activities, only: [ :index ]
   end
 
   # Core entity resources
   resources :authors do
-    resources :representations, only: [:create, :update, :destroy]
+    resources :representations, only: [ :create, :update, :destroy ]
   end
   resources :publishers
   resources :agents do
-    resources :representations, only: [:create, :update, :destroy]
+    resources :representations, only: [ :create, :update, :destroy ]
   end
   resources :prospects do
     member do
@@ -38,13 +38,13 @@ Rails.application.routes.draw do
   resources :deals
 
   # Notes (polymorphic, for all notable entities)
-  resources :notes, only: [:show, :create, :edit, :update, :destroy]
+  resources :notes, only: [ :show, :create, :edit, :update, :destroy ]
 
   # Global search
   get "search", to: "search#index", as: :search
 
   # Activities (for viewing activity history)
-  resources :activities, only: [:index]
+  resources :activities, only: [ :index ]
 
   # Design system test routes (only in test/development)
   if Rails.env.test? || Rails.env.development?
