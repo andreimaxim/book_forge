@@ -57,3 +57,9 @@ preload_app!
 on_worker_boot do
   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
 end
+
+require "barnes"
+
+before_fork do
+  Barnes.start # Must have enabled worker mode for this to block to be called
+end
