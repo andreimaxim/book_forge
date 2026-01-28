@@ -19,7 +19,7 @@ class ProspectsController < ApplicationController
 
     @prospects = @prospects.search(params[:search]) if params[:search].present?
 
-    @pipeline_view = params[:view] == "pipeline"
+    @view_mode = params[:view].presence || "list"
   end
 
   def show
