@@ -1,0 +1,42 @@
+{
+  "name": "BookForge",
+  "description": "A book publishing management application built with Ruby on Rails",
+  "repository": "https://github.com/andreimaxim/bookforge",
+  "keywords": ["rails", "ruby", "publishing", "books"],
+  "stack": "heroku-24",
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+  "env": {
+    "RAILS_ENV": {
+      "value": "production"
+    },
+    "RAILS_LOG_LEVEL": {
+      "value": "info"
+    },
+    "RAILS_MASTER_KEY": {
+      "description": "The master key used to decrypt Rails credentials",
+      "required": true
+    },
+    "SOLID_QUEUE_IN_PUMA": {
+      "description": "Run Solid Queue supervisor inside the Puma process",
+      "value": "true"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:essential-0"
+    }
+  ],
+  "scripts": {
+    "postdeploy": "bin/rails db:schema:load db:seed"
+  }
+}
