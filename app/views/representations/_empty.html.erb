@@ -1,0 +1,6 @@
+<div class="text-center py-8 text-gray-500">
+  <p class="text-sm">No <%= parent.is_a?(Author) ? "agents" : "authors" %> yet.</p>
+  <p class="text-xs mt-1">
+    Use the form above to add a<%= parent.is_a?(Author) ? "n agent" : "n author" %>.
+  </p>
+</div>

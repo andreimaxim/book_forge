@@ -33,15 +33,13 @@ class RelatedRecordsTest < ActionDispatch::IntegrationTest
   test "loads publisher deals tab via turbo frame" do
     publisher = publishers(:penguin_random_house)
 
-    get publisher_path(publisher)
+    # Publisher deals tab is lazy-loaded via turbo frame, request the endpoint directly
+    get publisher_deals_path(publisher)
 
     assert_response :success
 
-    # Should render deals in the deals tab content
-    assert_select "[data-testid='deals-tab-content']" do
-      # Penguin Random House has the Pride and Prejudice deal
-      assert_select "a[href='#{deal_path(deals(:pride_and_prejudice_deal))}']"
-    end
+    # Penguin Random House has the Pride and Prejudice deal
+    assert_select "a[href='#{deal_path(deals(:pride_and_prejudice_deal))}']"
   end
 
   test "loads agent authors tab via turbo frame" do
@@ -85,13 +83,12 @@ class RelatedRecordsTest < ActionDispatch::IntegrationTest
   test "publisher deals tab shows empty state when no deals" do
     publisher = publishers(:minimal_publisher)
 
-    get publisher_path(publisher)
+    # Publisher deals tab is lazy-loaded via turbo frame, request the endpoint directly
+    get publisher_deals_path(publisher)
 
     assert_response :success
 
-    assert_select "[data-testid='deals-tab-content']" do
-      assert_select "p", text: /No deals yet/
-    end
+    assert_select "p", text: /No deals yet/
   end
 
   test "agent deals tab shows deals with links" do

@@ -1,6 +1,6 @@
 <div class="space-y-4">
   <%# Deals for author's books %>
-  <% if deals.any? %>
+  <% if (rows = render partial: "authors/deal_row", collection: deals, cached: true) %>
     <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
@@ -14,17 +14,11 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <%= render partial: "authors/deal_row", collection: deals, cached: true %>
+          <%= rows %>
         </tbody>
       </table>
     </div>
   <% else %>
-    <div class="text-center py-8 text-gray-500">
-      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-      </svg>
-      <p class="mt-2 text-sm">No deals yet.</p>
-      <p class="text-xs mt-1">Deals associated with this author will appear here.</p>
-    </div>
+    <%= render "authors/deals_empty" %>
   <% end %>
 </div>

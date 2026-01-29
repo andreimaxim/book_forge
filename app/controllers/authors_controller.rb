@@ -14,7 +14,7 @@ class AuthorsController < ApplicationController
   def show
     @books = @author.books.recent
     @deals = @author.deals.includes(:book, :publisher, :agent).recent
-    @recent_activities = Activity.for_trackable("Author", @author.id).recent.limit(5)
+    @recent_activities = Activity.for_trackable("Author", @author.id).recent.limit(5).load
   end
 
   def new

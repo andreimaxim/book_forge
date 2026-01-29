@@ -25,7 +25,7 @@ class DealsController < ApplicationController
   end
 
   def show
-    @recent_activities = Activity.for_trackable("Deal", @deal.id).recent.limit(5)
+    @recent_activities = Activity.for_trackable("Deal", @deal.id).recent.limit(5).load
   end
 
   def new

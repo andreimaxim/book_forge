@@ -1,0 +1,26 @@
+<tr data-testid="deal-row">
+  <td class="px-6 py-4 whitespace-nowrap">
+    <%= link_to deal_row.book.title, book_path(deal_row.book), class: "text-sm font-medium text-gray-900 hover:text-blue-600" %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <%= link_to deal_row.book.author.full_name, author_path(deal_row.book.author), class: "text-sm text-gray-500 hover:text-blue-600" %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+      <%= deal_row.deal_type.humanize %>
+    </span>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= deal_row.formatted_advance %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <%= badge deal_row.status.humanize, status: deal_row.status.to_sym %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+    <%= deal_row.offer_date&.strftime("%b %d, %Y") || "-" %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+    <%= link_to "View", deal_path(deal_row), class: "text-blue-600 hover:text-blue-800 mr-3" %>
+    <%= link_to "Edit", edit_deal_path(deal_row), class: "text-gray-600 hover:text-gray-800" %>
+  </td>
+</tr>

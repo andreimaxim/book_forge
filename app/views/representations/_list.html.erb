@@ -9,17 +9,6 @@
 
   <%# List of representations %>
   <div id="<%= parent.is_a?(Author) ? 'author-representations' : 'agent-representations' %>" class="bg-white rounded-lg border border-gray-200">
-    <% if representations.any? %>
-      <% representations.each do |rep| %>
-        <%= render "representations/representation", representation: rep, parent: parent %>
-      <% end %>
-    <% else %>
-      <div class="text-center py-8 text-gray-500">
-        <p class="text-sm">No <%= parent.is_a?(Author) ? "agents" : "authors" %> yet.</p>
-        <p class="text-xs mt-1">
-          Use the form above to add a<%= parent.is_a?(Author) ? "n agent" : "n author" %>.
-        </p>
-      </div>
-    <% end %>
+    <%= render(partial: "representations/representation", collection: representations, as: :representation, locals: { parent: parent }) || render("representations/empty", parent: parent) %>
   </div>
 </div>

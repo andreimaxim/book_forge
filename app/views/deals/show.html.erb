@@ -173,12 +173,10 @@
                 activities_path(trackable_type: "Deal", trackable_id: @deal.id),
                 class: "text-sm text-blue-600 hover:text-blue-800" %>
           </div>
-          <% if @recent_activities.any? %>
-            <%= render "activities/timeline", activities: @recent_activities %>
+          <% if @recent_activities.empty? %>
+            <%= render "activities/empty" %>
           <% else %>
-            <div class="py-8 text-center text-gray-500 text-sm">
-              No activities recorded yet.
-            </div>
+            <%= render "activities/timeline", activities: @recent_activities %>
           <% end %>
         </div>
       </div>
