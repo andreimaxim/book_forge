@@ -1,16 +1,18 @@
 <% cache [prospect, prospect.agent, Date.current] do %>
 <tr data-testid="prospect-row">
-  <td class="px-6 py-4 whitespace-nowrap">
+  <td class="px-6 py-4 whitespace-nowrap overflow-hidden">
     <div class="flex items-center">
       <div class="flex-shrink-0 h-10 w-10">
         <div class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
           <span class="text-sm font-medium text-purple-700"><%= prospect.first_name[0] %><%= prospect.last_name[0] %></span>
         </div>
       </div>
-      <div class="ml-4">
-        <%= link_to prospect.full_name, prospect_path(prospect), class: "text-sm font-medium text-gray-900 hover:text-blue-600" %>
+      <div class="ml-4 min-w-0">
+        <div class="truncate">
+          <%= link_to prospect.full_name, prospect_path(prospect), class: "text-sm font-medium text-gray-900 hover:text-blue-600" %>
+        </div>
         <% if prospect.email.present? %>
-          <div class="text-sm text-gray-500"><%= prospect.email %></div>
+          <div class="text-sm text-gray-500 truncate w-full"><%= prospect.email %></div>
         <% end %>
       </div>
     </div>

@@ -1,17 +1,17 @@
 <% cache agent do %>
 <tr data-testid="agent-row" id="<%= dom_id(agent) %>">
-  <td class="px-6 py-4 whitespace-nowrap">
+  <td class="px-6 py-4 whitespace-nowrap overflow-hidden">
     <div class="flex items-center">
       <div class="flex-shrink-0 h-10 w-10">
         <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
           <span class="text-sm font-medium text-indigo-700"><%= agent.first_name[0] %><%= agent.last_name[0] %></span>
         </div>
       </div>
-      <div class="ml-4">
-        <div class="text-sm font-medium text-gray-900">
+      <div class="ml-4 min-w-0">
+        <div class="text-sm font-medium text-gray-900 truncate">
           <%= link_to agent.full_name, agent, class: "hover:text-blue-600" %>
         </div>
-        <div class="text-sm text-gray-500"><%= agent.email || "-" %></div>
+        <div class="text-sm text-gray-500 truncate w-full"><%= agent.email || "-" %></div>
       </div>
     </div>
   </td>
