@@ -10,8 +10,7 @@ class PublishersController < ApplicationController
   end
 
   def show
-    @deals = @publisher.deals.includes(:book, book: :author).order(offer_date: :desc)
-    @books = Book.joins(:deals).where(deals: { publisher_id: @publisher.id }).distinct.includes(:author)
+    @books = @publisher.books
   end
 
   def new

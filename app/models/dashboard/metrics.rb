@@ -92,7 +92,7 @@ module Dashboard
 
     def deals_by_status
       counts = Deal.group(:status).count
-      Deal::STATUSES.each_with_object({}) do |status, hash|
+      Deal.statuses.keys.each_with_object({}) do |status, hash|
         hash[status] = counts[status] || 0
       end
     end

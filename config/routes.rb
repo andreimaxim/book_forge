@@ -24,7 +24,10 @@ Rails.application.routes.draw do
   resources :authors do
     resources :representations, only: [ :create, :update, :destroy ]
   end
-  resources :publishers
+  resources :publishers do
+    resource :books, only: [:show], module: :publishers
+    resource :deals, only: [:show], module: :publishers
+  end
   resources :agents do
     resources :representations, only: [ :create, :update, :destroy ]
   end

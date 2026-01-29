@@ -70,8 +70,8 @@
       <div class="space-y-2">
         <div class="flex justify-between text-sm">
           <span class="text-gray-500">Signed</span>
-          <span class="font-medium <%= deal.signed? ? 'text-green-600' : 'text-gray-400' %>">
-            <%= deal.signed? ? "Yes" : "No" %>
+          <span class="font-medium <%= deal.contract_signed? ? 'text-green-600' : 'text-gray-400' %>">
+            <%= deal.contract_signed? ? "Yes" : "No" %>
           </span>
         </div>
         <% if deal.days_to_close %>

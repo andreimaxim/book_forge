@@ -15,6 +15,9 @@ class Book < ApplicationRecord
   belongs_to :author, counter_cache: true, touch: true
   has_many :deals, dependent: :restrict_with_error
 
+  # Callbacks
+  after_update :touch_deals
+
   # Validations
   validates :title, presence: true
   validates :genre, presence: true
@@ -66,6 +69,10 @@ class Book < ApplicationRecord
   end
 
   private
+
+  def touch_deals
+    deals.touch_all
+  end
 
   def publication_date_not_in_future_for_published_books
     return unless status == "published" && publication_date.present?

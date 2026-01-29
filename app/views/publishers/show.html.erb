@@ -101,11 +101,17 @@
     <%# Tab Content %>
     <div>
       <div data-testid="books-tab-content" data-tabs-target="panel" data-panel="books" class="p-6">
-        <%= render "publishers/books_tab", publisher: @publisher, books: @books %>
+        <%= turbo_frame_tag "publisher_books" do %>
+          <%= render "publishers/books_tab", publisher: @publisher, books: @books %>
+        <% end %>
       </div>
 
       <div data-testid="deals-tab-content" data-tabs-target="panel" data-panel="deals" class="p-6 hidden">
-        <%= render "publishers/deals_tab", publisher: @publisher, deals: @deals %>
+        <%= turbo_frame_tag "publisher_deals", src: publisher_deals_path(@publisher), loading: :lazy do %>
+          <div class="text-center py-8 text-gray-500">
+            <p class="text-sm">Loading deals...</p>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

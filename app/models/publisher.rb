@@ -8,6 +8,7 @@ class Publisher < ApplicationRecord
 
   # Associations
   has_many :deals, dependent: :restrict_with_error
+  has_many :books, -> { distinct }, through: :deals
 
   # Validations
   validates :name, presence: true

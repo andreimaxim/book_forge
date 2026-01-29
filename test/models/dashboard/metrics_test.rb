@@ -206,7 +206,7 @@ class Dashboard::MetricsTest < ActiveSupport::TestCase
     assert_kind_of Hash, result
 
     # Verify counts match actual data
-    Deal::STATUSES.each do |status|
+    Deal.statuses.keys.each do |status|
       expected = Deal.where(status: status).count
       assert_equal expected, result[status],
         "Expected #{expected} deals with status '#{status}', got #{result[status]}"

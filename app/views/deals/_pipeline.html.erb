@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-  <% Deal::STATUSES.each do |status| %>
+  <% Deal.statuses.keys.each do |status| %>
     <% next if %w[completed terminated].include?(status) %>
     <div data-testid="pipeline-status-<%= status %>" class="bg-gray-50 rounded-lg p-4">
       <div class="flex justify-between items-center mb-4">

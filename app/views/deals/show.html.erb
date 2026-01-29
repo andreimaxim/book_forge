@@ -117,13 +117,12 @@
     </div>
     <div class="px-6 py-4">
       <div class="flex items-center justify-between">
-        <% Deal::STATUSES.reject { |s| s == "terminated" }.each_with_index do |status, index| %>
+        <% Deal.workflow_statuses.each_with_index do |status, index| %>
           <% is_current = @deal.status == status %>
-          <% is_past = Deal::STATUSES.index(@deal.status) > Deal::STATUSES.index(status) %>
-          <% is_terminated = @deal.status == "terminated" %>
+          <% is_past = @deal.status_past?(status) %>
           <div class="flex items-center">
-            <div class="<%= is_terminated ? 'bg-red-600' : (is_current ? 'bg-blue-600' : (is_past ? 'bg-green-600' : 'bg-gray-300')) %> rounded-full h-8 w-8 flex items-center justify-center">
-              <% if is_past && !is_terminated %>
+            <div class="<%= @deal.terminated? ? 'bg-red-600' : (is_current ? 'bg-blue-600' : (is_past ? 'bg-green-600' : 'bg-gray-300')) %> rounded-full h-8 w-8 flex items-center justify-center">
+              <% if is_past && !@deal.terminated? %>
                 <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
@@ -135,12 +134,12 @@
               <%= status.humanize %>
             </span>
           </div>
-          <% unless index == Deal::STATUSES.reject { |s| s == "terminated" }.length - 1 %>
+          <% unless index == Deal.workflow_statuses.length - 1 %>
             <div class="flex-1 h-0.5 mx-4 <%= is_past ? 'bg-green-600' : 'bg-gray-300' %>"></div>
           <% end %>
         <% end %>
       </div>
-      <% if @deal.status == "terminated" %>
+      <% if @deal.terminated? %>
         <div class="mt-4 p-3 bg-red-50 rounded-lg">
           <p class="text-sm text-red-700">This deal has been terminated.</p>
         </div>

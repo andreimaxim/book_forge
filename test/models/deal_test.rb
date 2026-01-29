@@ -365,12 +365,12 @@ class DealTest < ActiveSupport::TestCase
     assert_equal "$0.00", deal.formatted_advance
   end
 
-  test "determines if deal is signed" do
-    assert deals(:pride_and_prejudice_deal).signed?
-    assert deals(:translation_deal).signed?
-    assert deals(:the_shining_deal).signed? # active deals are also signed
-    assert_not deals(:negotiating_deal).signed?
-    assert_not deals(:pending_contract_deal).signed?
+  test "determines if contract is signed" do
+    assert deals(:pride_and_prejudice_deal).contract_signed?
+    assert deals(:translation_deal).contract_signed?
+    assert deals(:the_shining_deal).contract_signed? # active deals are also signed
+    assert_not deals(:negotiating_deal).contract_signed?
+    assert_not deals(:pending_contract_deal).contract_signed?
   end
 
   test "determines days to close" do

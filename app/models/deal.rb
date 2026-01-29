@@ -4,7 +4,6 @@ class Deal < ApplicationRecord
 
   # Constants
   DEAL_TYPES = %w[world_rights north_american translation audio film_tv].freeze
-  STATUSES = %w[negotiating pending_contract signed active completed terminated].freeze
 
   CURRENCY_SYMBOLS = {
     "USD" => "$",
@@ -19,9 +18,11 @@ class Deal < ApplicationRecord
   belongs_to :publisher, counter_cache: true, touch: true
   belongs_to :agent, optional: true, touch: true
 
+  # Enums
+  enum :status, %w[negotiating pending_contract signed active completed terminated].index_by(&:itself)
+
   # Validations
   validates :deal_type, presence: true, inclusion: { in: DEAL_TYPES }
-  validates :status, inclusion: { in: STATUSES }
   validates :advance_amount, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :royalty_rate_hardcover, numericality: {
     greater_than_or_equal_to: 0,
@@ -49,7 +50,8 @@ class Deal < ApplicationRecord
   scope :by_publisher, ->(publisher) { where(publisher: publisher) }
   scope :by_agent, ->(agent) { where(agent: agent) }
 
-  scope :active, -> { where(status: %w[negotiating pending_contract signed active]) }
+  scope :active, -> { where(status: [:negotiating, :pending_contract, :signed, :active]) }
+  scope :recent, -> { order(offer_date: :desc) }
 
   scope :this_year, -> {
     where(offer_date: Date.current.beginning_of_year..Date.current.end_of_year)
@@ -68,7 +70,18 @@ class Deal < ApplicationRecord
       )
   }
 
+  # Class methods
+  def self.workflow_statuses
+    statuses.keys - %w[terminated]
+  end
+
   # Instance methods
+  def status_past?(other_status)
+    return false if terminated?
+
+    self.class.workflow_statuses.index(status) > self.class.workflow_statuses.index(other_status)
+  end
+
   def agent_commission
     return 0.00 if agent.nil? || advance_amount.nil? || advance_amount.zero?
     (advance_amount * agent.commission_rate / 100.0).round(2)
@@ -89,8 +102,8 @@ class Deal < ApplicationRecord
     "#{symbol}#{format('%.2f', amount).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
   end
 
-  def signed?
-    status.in?(%w[signed active completed])
+  def contract_signed?
+    signed? || active? || completed?
   end
 
   def days_to_close

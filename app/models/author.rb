@@ -10,6 +10,9 @@ class Author < ApplicationRecord
   has_many :representations, dependent: :destroy
   has_many :agents, through: :representations
 
+  # Callbacks
+  after_update :touch_books
+
   # Validations
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -36,5 +39,11 @@ class Author < ApplicationRecord
 
   def initials
     "#{first_name[0]}#{last_name[0]}".upcase
+  end
+
+  private
+
+  def touch_books
+    books.touch_all
   end
 end
