@@ -13,7 +13,7 @@ class AgentsController < ApplicationController
   end
 
   def show
-    @deals = @agent.deals.includes(:book, :publisher, book: :author).order(offer_date: :desc)
+    @deals = @agent.deals.includes(:book, :publisher, book: :author).recent
   end
 
   def new

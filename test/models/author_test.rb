@@ -87,14 +87,14 @@ class AuthorTest < ActiveSupport::TestCase
     assert author.valid?
   end
 
-  test "validates status is a known value" do
-    author = Author.new(
-      first_name: "John",
-      last_name: "Doe",
-      status: "unknown_status"
-    )
-    assert_not author.valid?
-    assert_includes author.errors[:status], "is not included in the list"
+  test "raises error for invalid status value" do
+    assert_raises(ArgumentError) do
+      Author.new(
+        first_name: "John",
+        last_name: "Doe",
+        status: "unknown_status"
+      )
+    end
   end
 
   test "allows valid status values" do

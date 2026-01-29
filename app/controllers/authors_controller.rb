@@ -12,8 +12,8 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @books = @author.books.order(created_at: :desc)
-    @deals = Deal.joins(:book).where(books: { author_id: @author.id }).includes(:book, :publisher, :agent).order(offer_date: :desc)
+    @books = @author.books.recent
+    @deals = @author.deals.includes(:book, :publisher, :agent).recent
     @recent_activities = Activity.for_trackable("Author", @author.id).recent.limit(5)
   end
 

@@ -2,14 +2,17 @@ class Agent < ApplicationRecord
   include Notable
   include Trackable
 
-  # Constants
-  STATUSES = %w[active inactive not_accepting].freeze
+  # Enums
+  enum :status, %w[active inactive not_accepting].index_by(&:itself)
 
   # Associations
   has_many :deals, dependent: :nullify
   has_many :prospects, dependent: :nullify
   has_many :representations, dependent: :destroy
   has_many :authors, through: :representations
+
+  # Callbacks
+  after_update :touch_representations, :touch_deals
 
   # Validations
   validates :first_name, presence: true
@@ -20,9 +23,10 @@ class Agent < ApplicationRecord
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100
   }, allow_nil: true
-  validates :status, inclusion: { in: STATUSES }
+  validates :status, presence: true
 
   # Scopes
+  scope :recent, -> { order(updated_at: :desc) }
   scope :active, -> { where(status: "active") }
   scope :accepting_clients, -> { where(status: "active") }
   scope :by_agency, ->(agency) { where(agency_name: agency) }
@@ -62,5 +66,15 @@ class Agent < ApplicationRecord
   def commission_for(amount)
     return 0.00 if commission_rate.nil?
     (amount * commission_rate / 100.0).round(2)
+  end
+
+  private
+
+  def touch_representations
+    representations.touch_all
+  end
+
+  def touch_deals
+    deals.touch_all
   end
 end

@@ -2,9 +2,9 @@ class Prospect < ApplicationRecord
   include Notable
   include Trackable
 
-  # Constants
-  SOURCES = %w[query_letter referral conference social_media website other].freeze
-  STAGES = %w[new contacted evaluating negotiating converted declined].freeze
+  # Enums
+  enum :stage, %w[new contacted evaluating negotiating converted declined].index_by(&:itself), prefix: true
+  enum :source, %w[query_letter referral conference social_media website other].index_by(&:itself)
 
   # Valid stage transitions: current_stage => [allowed_next_stages]
   STAGE_TRANSITIONS = {
@@ -23,11 +23,11 @@ class Prospect < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
-  validates :source, inclusion: { in: SOURCES }, allow_blank: true
-  validates :stage, inclusion: { in: STAGES }
+  validates :stage, presence: true
   validates :estimated_word_count, numericality: { greater_than: 0 }, allow_nil: true
 
   # Scopes
+  scope :recent, -> { order(updated_at: :desc) }
   scope :by_stage, ->(stage) { where(stage: stage) }
   scope :by_source, ->(source) { where(source: source) }
   scope :follow_up_today, -> { where(follow_up_date: Date.today) }
@@ -46,6 +46,11 @@ class Prospect < ApplicationRecord
 
   # Active pipeline (not converted or declined)
   scope :active, -> { where.not(stage: %w[converted declined]) }
+
+  # Class methods
+  def self.workflow_stages
+    stages.keys - %w[converted declined]
+  end
 
   # Instance methods
   def full_name
@@ -130,5 +135,27 @@ class Prospect < ApplicationRecord
     return 0 if stage_changed_at.nil?
 
     ((Time.current - stage_changed_at) / 1.day).floor
+  end
+
+  def stage_past?(other_stage)
+    return false if stage == "converted" || stage == "declined"
+
+    self.class.workflow_stages.index(stage) > self.class.workflow_stages.index(other_stage)
+  end
+
+  def convertible?
+    stage == "negotiating"
+  end
+
+  def declinable?
+    stage != "converted" && stage != "declined"
+  end
+
+  def follow_up_overdue?
+    follow_up_date.present? && follow_up_date < Date.current
+  end
+
+  def follow_up_today?
+    follow_up_date.present? && follow_up_date == Date.current
   end
 end

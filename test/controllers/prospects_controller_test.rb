@@ -15,7 +15,7 @@ class ProspectsControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_select "h1", "Prospects"
     # Should have stage columns for active stages
-    Prospect::STAGES.each do |stage|
+    Prospect.stages.keys.each do |stage|
       next if %w[converted declined].include?(stage)
       assert_select "[data-testid='pipeline-stage-#{stage}']"
     end

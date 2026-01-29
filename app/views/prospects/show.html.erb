@@ -29,8 +29,8 @@
           </div>
         </div>
         <div class="flex gap-2">
-          <% unless %w[converted declined].include?(@prospect.stage) %>
-            <% if @prospect.stage == "negotiating" %>
+          <% if @prospect.declinable? %>
+            <% if @prospect.convertible? %>
               <%= form_with url: convert_prospect_path(@prospect), method: :post, class: "inline" do %>
                 <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                   Convert to Author
@@ -103,14 +103,12 @@
         <div>
           <dt class="text-sm font-medium text-gray-500">Follow Up Date</dt>
           <dd class="mt-1 text-sm text-gray-900">
-            <% if @prospect.follow_up_date %>
-              <% if @prospect.follow_up_date < Date.today %>
-                <span class="text-red-600 font-medium">Overdue: <%= @prospect.follow_up_date.strftime("%B %d, %Y") %></span>
-              <% elsif @prospect.follow_up_date == Date.today %>
-                <span class="text-yellow-600 font-medium">Today</span>
-              <% else %>
-                <%= @prospect.follow_up_date.strftime("%B %d, %Y") %>
-              <% end %>
+            <% if @prospect.follow_up_overdue? %>
+              <span class="text-red-600 font-medium">Overdue: <%= @prospect.follow_up_date.strftime("%B %d, %Y") %></span>
+            <% elsif @prospect.follow_up_today? %>
+              <span class="text-yellow-600 font-medium">Today</span>
+            <% elsif @prospect.follow_up_date %>
+              <%= @prospect.follow_up_date.strftime("%B %d, %Y") %>
             <% else %>
               -
             <% end %>
@@ -143,16 +141,16 @@
   </div>
 
   <%# Stage Progression %>
-  <% unless @prospect.stage == "converted" || @prospect.stage == "declined" %>
+  <% if @prospect.declinable? %>
     <div class="mt-6 bg-white rounded-lg shadow overflow-hidden">
       <div class="px-6 py-4 border-b border-gray-200">
         <h2 class="text-lg font-medium text-gray-900">Stage Progression</h2>
       </div>
       <div class="px-6 py-4">
         <div class="flex items-center justify-between">
-          <% Prospect::STAGES.reject { |s| %w[converted declined].include?(s) }.each_with_index do |stage, index| %>
+          <% Prospect.workflow_stages.each_with_index do |stage, index| %>
             <% is_current = @prospect.stage == stage %>
-            <% is_past = Prospect::STAGES.index(@prospect.stage) > Prospect::STAGES.index(stage) %>
+            <% is_past = @prospect.stage_past?(stage) %>
             <div class="flex items-center">
               <div class="<%= is_current ? 'bg-blue-600' : (is_past ? 'bg-green-600' : 'bg-gray-300') %> rounded-full h-8 w-8 flex items-center justify-center">
                 <% if is_past %>
@@ -167,7 +165,7 @@
                 <%= stage.humanize %>
               </span>
             </div>
-            <% unless index == Prospect::STAGES.reject { |s| %w[converted declined].include?(s) }.length - 1 %>
+            <% unless index == Prospect.workflow_stages.length - 1 %>
               <div class="flex-1 h-0.5 mx-4 <%= is_past ? 'bg-green-600' : 'bg-gray-300' %>"></div>
             <% end %>
           <% end %>

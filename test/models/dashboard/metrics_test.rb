@@ -183,7 +183,7 @@ class Dashboard::MetricsTest < ActiveSupport::TestCase
     assert_kind_of Hash, result
 
     # Verify counts match actual data
-    Book::STATUSES.each do |status|
+    Book.statuses.keys.each do |status|
       expected = Book.where(status: status).count
       assert_equal expected, result[status],
         "Expected #{expected} books with status '#{status}', got #{result[status]}"

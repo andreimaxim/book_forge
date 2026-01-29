@@ -69,13 +69,13 @@ class RepresentationsController < ApplicationController
   def render_form_with_errors
     if @parent.is_a?(Author)
       @author = @parent
-      @books = @author.books.order(created_at: :desc)
-      @deals = Deal.joins(:book).where(books: { author_id: @author.id }).includes(:book, :publisher, :agent).order(offer_date: :desc)
+      @books = @author.books.recent
+      @deals = @author.deals.includes(:book, :publisher, :agent).recent
       @recent_activities = Activity.for_trackable("Author", @author.id).recent.limit(5)
       render "authors/show", status: :unprocessable_entity
     else
       @agent = @parent
-      @deals = @agent.deals.includes(:book, :publisher, book: :author).order(offer_date: :desc)
+      @deals = @agent.deals.includes(:book, :publisher, book: :author).recent
       render "agents/show", status: :unprocessable_entity
     end
   end

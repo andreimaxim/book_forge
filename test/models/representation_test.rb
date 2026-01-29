@@ -29,14 +29,14 @@ class RepresentationTest < ActiveSupport::TestCase
     assert_includes duplicate.errors[:author_id], "has already been taken"
   end
 
-  test "validates status is a known value" do
-    representation = Representation.new(
-      author: authors(:author_without_books),
-      agent: agents(:inactive_agent),
-      status: "invalid_status"
-    )
-    assert_not representation.valid?
-    assert_includes representation.errors[:status], "is not included in the list"
+  test "raises error for invalid status value" do
+    assert_raises(ArgumentError) do
+      Representation.new(
+        author: authors(:author_without_books),
+        agent: agents(:inactive_agent),
+        status: "invalid_status"
+      )
+    end
   end
 
   test "validates end date is after start date" do

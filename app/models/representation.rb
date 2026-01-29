@@ -1,6 +1,6 @@
 class Representation < ApplicationRecord
-  # Constants
-  STATUSES = %w[active ended].freeze
+  # Enums
+  enum :status, %w[active ended].index_by(&:itself)
 
   # Associations
   belongs_to :author, touch: true
@@ -8,7 +8,7 @@ class Representation < ApplicationRecord
 
   # Validations
   validates :author_id, uniqueness: { scope: :agent_id }
-  validates :status, inclusion: { in: STATUSES }
+  validates :status, presence: true
   validate :end_date_after_start_date
 
   # Scopes

@@ -2,11 +2,12 @@ class Author < ApplicationRecord
   include Notable
   include Trackable
 
-  # Constants
-  STATUSES = %w[active inactive deceased].freeze
+  # Enums
+  enum :status, %w[active inactive deceased].index_by(&:itself)
 
   # Associations
   has_many :books, dependent: :restrict_with_error
+  has_many :deals, through: :books
   has_many :representations, dependent: :destroy
   has_many :agents, through: :representations
 
@@ -19,9 +20,10 @@ class Author < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validates :email, uniqueness: true, allow_blank: true
   validates :website, format: { with: %r{\Ahttps?://\S+\z} }, allow_blank: true
-  validates :status, inclusion: { in: STATUSES }
+  validates :status, presence: true
 
   # Scopes
+  scope :recent, -> { order(updated_at: :desc) }
   scope :active, -> { where(status: "active") }
   scope :by_genre, ->(genre) { where(genre_focus: genre) }
   scope :alphabetical, -> { order(:last_name, :first_name) }

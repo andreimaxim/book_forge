@@ -2,20 +2,22 @@ class Publisher < ApplicationRecord
   include Notable
   include Trackable
 
-  # Constants
-  SIZES = %w[big_five major mid_size small indie].freeze
-  STATUSES = %w[active inactive].freeze
+  # Enums
+  enum :status, %w[active inactive].index_by(&:itself)
+  enum :size, %w[big_five major mid_size small indie].index_by(&:itself)
 
   # Associations
   has_many :deals, dependent: :restrict_with_error
   has_many :books, -> { distinct }, through: :deals
 
+  # Callbacks
+  after_update :touch_deals
+
   # Validations
   validates :name, presence: true
   validates :contact_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validates :website, format: { with: %r{\Ahttps?://\S+\z} }, allow_blank: true
-  validates :size, inclusion: { in: SIZES }, allow_blank: true
-  validates :status, inclusion: { in: STATUSES }
+  validates :status, presence: true
 
   # Scopes
   scope :active, -> { where(status: "active") }
@@ -51,6 +53,10 @@ class Publisher < ApplicationRecord
   end
 
   private
+
+  def touch_deals
+    deals.touch_all
+  end
 
   def city_state_postal
     # Format: "City, State PostalCode"

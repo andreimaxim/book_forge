@@ -143,15 +143,15 @@ class BookTest < ActiveSupport::TestCase
     assert book2.valid?
   end
 
-  test "validates status is a known value" do
-    book = Book.new(
-      title: "Test Book",
-      author: authors(:jane_austen),
-      genre: "Romance",
-      status: "unknown_status"
-    )
-    assert_not book.valid?
-    assert_includes book.errors[:status], "is not included in the list"
+  test "raises error for invalid status value" do
+    assert_raises(ArgumentError) do
+      Book.new(
+        title: "Test Book",
+        author: authors(:jane_austen),
+        genre: "Romance",
+        status: "unknown_status"
+      )
+    end
   end
 
   test "allows valid status values" do

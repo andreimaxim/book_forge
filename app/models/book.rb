@@ -2,9 +2,9 @@ class Book < ApplicationRecord
   include Notable
   include Trackable
 
-  # Constants
-  STATUSES = %w[manuscript submitted under_review accepted in_production published out_of_print].freeze
-  FORMATS = %w[hardcover paperback ebook audiobook].freeze
+  # Enums
+  enum :status, %w[manuscript submitted under_review accepted in_production published out_of_print].index_by(&:itself)
+  enum :format, %w[hardcover paperback ebook audiobook].index_by(&:itself)
 
   # ISBN regex patterns:
   # ISBN-10: 10 digits, optionally with hyphens (e.g., "0-306-40615-2" or "0306406152")
@@ -21,8 +21,7 @@ class Book < ApplicationRecord
   # Validations
   validates :title, presence: true
   validates :genre, presence: true
-  validates :status, inclusion: { in: STATUSES }
-  validates :format, inclusion: { in: FORMATS }, allow_blank: true
+  validates :status, presence: true
 
   validates :word_count, numericality: { greater_than: 0 }, allow_nil: true
   validates :list_price, numericality: { greater_than: 0 }, allow_nil: true
@@ -34,6 +33,7 @@ class Book < ApplicationRecord
   validate :publication_date_not_in_future_for_published_books
 
   # Scopes
+  scope :recent, -> { order(created_at: :desc) }
   scope :by_status, ->(status) { where(status: status) }
   scope :by_genre, ->(genre) { where(genre: genre) }
   scope :by_author, ->(author) { where(author: author) }
@@ -49,7 +49,16 @@ class Book < ApplicationRecord
       )
   }
 
+  # Class methods
+  def self.workflow_statuses
+    statuses.keys
+  end
+
   # Instance methods
+  def status_past?(other_status)
+    self.class.workflow_statuses.index(status) > self.class.workflow_statuses.index(other_status)
+  end
+
   def published?
     status == "published"
   end

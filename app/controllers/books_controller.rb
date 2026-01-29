@@ -2,7 +2,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
 
   def index
-    @books = Book.includes(:author).order(created_at: :desc)
+    @books = Book.includes(:author).recent
 
     @books = @books.by_status(params[:status]) if params[:status].present?
     @books = @books.by_genre(params[:genre]) if params[:genre].present?
@@ -13,7 +13,7 @@ class BooksController < ApplicationController
   end
 
   def show
-    @deals = @book.deals.includes(:publisher, :agent).order(offer_date: :desc)
+    @deals = @book.deals.includes(:publisher, :agent).recent
   end
 
   def new

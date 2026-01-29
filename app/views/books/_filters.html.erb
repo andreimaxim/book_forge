@@ -3,7 +3,7 @@
 
   <%# Status filter %>
   <div class="flex gap-2 flex-wrap">
-    <% Book::STATUSES.each do |status| %>
+    <% Book.statuses.keys.each do |status| %>
       <%= link_to status.humanize,
         books_path(status: status, genre: params[:genre], author_id: params[:author_id], search: params[:search], view: params[:view]),
         class: "px-3 py-1 rounded-full text-sm #{params[:status] == status ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}",

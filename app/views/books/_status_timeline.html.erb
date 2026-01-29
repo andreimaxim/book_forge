@@ -4,7 +4,7 @@
   <h3 class="text-sm font-medium text-gray-500 mb-3">Status Timeline</h3>
   <div class="flex items-center justify-between">
     <%
-      statuses = Book::STATUSES
+      statuses = Book.statuses.keys
       current_index = statuses.index(book.status) || 0
     %>
     <% statuses.each_with_index do |status, index| %>

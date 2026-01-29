@@ -85,7 +85,7 @@ module Dashboard
 
     def books_by_status
       counts = Book.group(:status).count
-      Book::STATUSES.each_with_object({}) do |status, hash|
+      Book.statuses.keys.each_with_object({}) do |status, hash|
         hash[status] = counts[status] || 0
       end
     end

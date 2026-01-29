@@ -23,7 +23,7 @@
     <div class="min-w-[150px]">
       <%= form.label :deal_type, "Deal Type", class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= form.select :deal_type,
-        [["All Types", ""]] + Deal::DEAL_TYPES.map { |t| [t.humanize, t] },
+        deal_type_options(include_all: true),
         { selected: params[:deal_type] },
         class: "w-full rounded-md border-gray-300 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
     </div>

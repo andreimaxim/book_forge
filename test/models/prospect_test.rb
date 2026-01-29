@@ -42,14 +42,14 @@ class ProspectTest < ActiveSupport::TestCase
     assert prospect.valid?
   end
 
-  test "validates source is a known value" do
-    prospect = Prospect.new(
-      first_name: "John",
-      last_name: "Doe",
-      source: "unknown_source"
-    )
-    assert_not prospect.valid?
-    assert_includes prospect.errors[:source], "is not included in the list"
+  test "raises error for invalid source value" do
+    assert_raises(ArgumentError) do
+      Prospect.new(
+        first_name: "John",
+        last_name: "Doe",
+        source: "unknown_source"
+      )
+    end
   end
 
   test "allows valid source values" do
@@ -72,14 +72,14 @@ class ProspectTest < ActiveSupport::TestCase
     assert prospect.valid?
   end
 
-  test "validates stage is a known value" do
-    prospect = Prospect.new(
-      first_name: "John",
-      last_name: "Doe",
-      stage: "unknown_stage"
-    )
-    assert_not prospect.valid?
-    assert_includes prospect.errors[:stage], "is not included in the list"
+  test "raises error for invalid stage value" do
+    assert_raises(ArgumentError) do
+      Prospect.new(
+        first_name: "John",
+        last_name: "Doe",
+        stage: "unknown_stage"
+      )
+    end
   end
 
   test "allows valid stage values" do

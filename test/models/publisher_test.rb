@@ -58,13 +58,13 @@ class PublisherTest < ActiveSupport::TestCase
     assert publisher.valid?
   end
 
-  test "validates size is a known value" do
-    publisher = Publisher.new(
-      name: "Test Publisher",
-      size: "unknown_size"
-    )
-    assert_not publisher.valid?
-    assert_includes publisher.errors[:size], "is not included in the list"
+  test "raises error for invalid size value" do
+    assert_raises(ArgumentError) do
+      Publisher.new(
+        name: "Test Publisher",
+        size: "unknown_size"
+      )
+    end
   end
 
   test "allows valid size values" do
@@ -85,13 +85,13 @@ class PublisherTest < ActiveSupport::TestCase
     assert publisher.valid?
   end
 
-  test "validates status is a known value" do
-    publisher = Publisher.new(
-      name: "Test Publisher",
-      status: "unknown_status"
-    )
-    assert_not publisher.valid?
-    assert_includes publisher.errors[:status], "is not included in the list"
+  test "raises error for invalid status value" do
+    assert_raises(ArgumentError) do
+      Publisher.new(
+        name: "Test Publisher",
+        status: "unknown_status"
+      )
+    end
   end
 
   test "allows valid status values" do

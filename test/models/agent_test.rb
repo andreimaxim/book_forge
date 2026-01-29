@@ -98,14 +98,14 @@ class AgentTest < ActiveSupport::TestCase
     assert agent.valid?
   end
 
-  test "validates status is a known value" do
-    agent = Agent.new(
-      first_name: "John",
-      last_name: "Doe",
-      status: "unknown_status"
-    )
-    assert_not agent.valid?
-    assert_includes agent.errors[:status], "is not included in the list"
+  test "raises error for invalid status value" do
+    assert_raises(ArgumentError) do
+      Agent.new(
+        first_name: "John",
+        last_name: "Doe",
+        status: "unknown_status"
+      )
+    end
   end
 
   test "allows valid status values" do

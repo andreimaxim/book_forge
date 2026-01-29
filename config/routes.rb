@@ -23,13 +23,17 @@ Rails.application.routes.draw do
   # Core entity resources
   resources :authors do
     resources :representations, only: [ :create, :update, :destroy ]
+    resource :deals, only: [ :show ], module: :authors
+    resource :agents, only: [ :show ], module: :authors
+    resource :notes, only: [ :show ], module: :authors
   end
   resources :publishers do
-    resource :books, only: [:show], module: :publishers
-    resource :deals, only: [:show], module: :publishers
+    resource :books, only: [ :show ], module: :publishers
+    resource :deals, only: [ :show ], module: :publishers
   end
   resources :agents do
     resources :representations, only: [ :create, :update, :destroy ]
+    resource :deals, only: [ :show ], module: :agents
   end
   resources :prospects do
     member do

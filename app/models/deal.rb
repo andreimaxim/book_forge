@@ -2,8 +2,8 @@ class Deal < ApplicationRecord
   include Notable
   include Trackable
 
-  # Constants
-  DEAL_TYPES = %w[world_rights north_american translation audio film_tv].freeze
+  # Enums
+  enum :deal_type, %w[world_rights north_american translation audio film_tv].index_by(&:itself)
 
   CURRENCY_SYMBOLS = {
     "USD" => "$",
@@ -22,7 +22,7 @@ class Deal < ApplicationRecord
   enum :status, %w[negotiating pending_contract signed active completed terminated].index_by(&:itself)
 
   # Validations
-  validates :deal_type, presence: true, inclusion: { in: DEAL_TYPES }
+  validates :deal_type, presence: true
   validates :advance_amount, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :royalty_rate_hardcover, numericality: {
     greater_than_or_equal_to: 0,
@@ -50,7 +50,7 @@ class Deal < ApplicationRecord
   scope :by_publisher, ->(publisher) { where(publisher: publisher) }
   scope :by_agent, ->(agent) { where(agent: agent) }
 
-  scope :active, -> { where(status: [:negotiating, :pending_contract, :signed, :active]) }
+  scope :active, -> { where(status: [ :negotiating, :pending_contract, :signed, :active ]) }
   scope :recent, -> { order(offer_date: :desc) }
 
   scope :this_year, -> {

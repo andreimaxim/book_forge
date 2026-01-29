@@ -44,7 +44,7 @@
       <div class="mb-4">
         <%= form.label :source, "Source", class: "block text-sm font-medium text-gray-700" %>
         <%= form.select :source,
-          [["Select source...", ""]] + Prospect::SOURCES.map { |s| [s.humanize, s] },
+          [["Select source...", ""]] + Prospect.sources.keys.map { |s| [s.humanize, s] },
           {},
           class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
       </div>
@@ -52,7 +52,7 @@
       <div class="mb-4">
         <%= form.label :stage, "Stage", class: "block text-sm font-medium text-gray-700" %>
         <%= form.select :stage,
-          Prospect::STAGES.reject { |s| %w[converted declined].include?(s) }.map { |s| [s.humanize, s] },
+          Prospect.workflow_stages.map { |s| [s.humanize, s] },
           {},
           class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
       </div>

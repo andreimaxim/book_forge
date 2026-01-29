@@ -35,14 +35,14 @@ class DealTest < ActiveSupport::TestCase
     assert_includes deal.errors[:deal_type], "can't be blank"
   end
 
-  test "validates deal type is a known value" do
-    deal = Deal.new(
-      book: books(:pride_and_prejudice),
-      publisher: publishers(:penguin_random_house),
-      deal_type: "invalid_type"
-    )
-    assert_not deal.valid?
-    assert_includes deal.errors[:deal_type], "is not included in the list"
+  test "raises error for invalid deal type value" do
+    assert_raises(ArgumentError) do
+      Deal.new(
+        book: books(:pride_and_prejudice),
+        publisher: publishers(:penguin_random_house),
+        deal_type: "invalid_type"
+      )
+    end
   end
 
   test "allows valid deal type values" do
@@ -57,15 +57,15 @@ class DealTest < ActiveSupport::TestCase
     end
   end
 
-  test "validates status is a known value" do
-    deal = Deal.new(
-      book: books(:pride_and_prejudice),
-      publisher: publishers(:penguin_random_house),
-      deal_type: "world_rights",
-      status: "invalid_status"
-    )
-    assert_not deal.valid?
-    assert_includes deal.errors[:status], "is not included in the list"
+  test "raises error for invalid status value" do
+    assert_raises(ArgumentError) do
+      Deal.new(
+        book: books(:pride_and_prejudice),
+        publisher: publishers(:penguin_random_house),
+        deal_type: "world_rights",
+        status: "invalid_status"
+      )
+    end
   end
 
   test "allows valid status values" do

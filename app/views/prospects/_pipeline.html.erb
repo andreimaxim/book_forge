@@ -1,6 +1,5 @@
 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-  <% Prospect::STAGES.each do |stage| %>
-    <% next if %w[converted declined].include?(stage) %>
+  <% Prospect.workflow_stages.each do |stage| %>
     <div data-testid="pipeline-stage-<%= stage %>" class="bg-gray-50 rounded-lg p-4">
       <div class="flex justify-between items-center mb-4">
         <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide"><%= stage.humanize %></h3>
@@ -35,9 +34,9 @@
             </div>
             <% if prospect.follow_up_date %>
               <div class="mt-2 pt-2 border-t border-gray-100">
-                <% if prospect.follow_up_date < Date.today %>
+                <% if prospect.follow_up_overdue? %>
                   <span class="text-xs text-red-600">Overdue: <%= prospect.follow_up_date.strftime("%b %d") %></span>
-                <% elsif prospect.follow_up_date == Date.today %>
+                <% elsif prospect.follow_up_today? %>
                   <span class="text-xs text-yellow-600">Follow up today</span>
                 <% else %>
                   <span class="text-xs text-gray-500">Follow up: <%= prospect.follow_up_date.strftime("%b %d") %></span>

@@ -19,7 +19,7 @@ class DealsController < ApplicationController
 
     @deals = @deals.search(params[:search]) if params[:search].present?
 
-    @deals = @deals.order(offer_date: :desc)
+    @deals = @deals.recent
 
     @view_mode = params[:view].presence || "list"
   end

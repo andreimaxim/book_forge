@@ -25,43 +25,7 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <% deals.each do |deal| %>
-            <% cache [deal, deal.publisher, deal.agent] do %>
-            <tr data-testid="deal-row">
-              <td class="px-6 py-4 whitespace-nowrap">
-                <%= link_to deal.publisher.name, publisher_path(deal.publisher), class: "text-sm font-medium text-gray-900 hover:text-blue-600" %>
-                <% if deal.publisher.imprint.present? %>
-                  <div class="text-xs text-gray-500">(<%= deal.publisher.imprint %>)</div>
-                <% end %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-                  <%= deal.deal_type.humanize %>
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                <%= deal.formatted_advance %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <%= badge deal.status.humanize, status: deal.status.to_sym %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <% if deal.agent %>
-                  <%= link_to deal.agent.full_name, agent_path(deal.agent), class: "hover:text-blue-600" %>
-                <% else %>
-                  <span class="text-gray-400">-</span>
-                <% end %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <%= deal.offer_date&.strftime("%b %d, %Y") || "-" %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <%= link_to "View", deal_path(deal), class: "text-blue-600 hover:text-blue-800 mr-3" %>
-                <%= link_to "Edit", edit_deal_path(deal), class: "text-gray-600 hover:text-gray-800" %>
-              </td>
-            </tr>
-            <% end %>
-          <% end %>
+          <%= render partial: "books/deal_row", collection: deals, cached: true %>
         </tbody>
       </table>
     </div>

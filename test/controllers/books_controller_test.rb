@@ -13,7 +13,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     get books_path(view: "pipeline")
 
     assert_response :ok
-    Book::STATUSES.each do |status|
+    Book.statuses.keys.each do |status|
       assert_select "[data-testid='pipeline-status-#{status}']"
     end
   end

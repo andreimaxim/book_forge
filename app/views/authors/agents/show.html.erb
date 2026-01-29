@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "author_agents" do %>
+  <% representation = @author.representations.build %>
+  <%= render "representations/list", parent: @author, representations: @representations, representation: representation %>
+<% end %>

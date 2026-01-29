@@ -60,7 +60,7 @@
       <div class="mb-4">
         <%= form.label :deal_type, "Deal Type", class: "block text-sm font-medium text-gray-700" %>
         <%= form.select :deal_type,
-          Deal::DEAL_TYPES.map { |t| [t.humanize, t] },
+          deal_type_options,
           { include_blank: "Select deal type...", selected: deal.deal_type },
           class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
       </div>

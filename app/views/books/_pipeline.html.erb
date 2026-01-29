@@ -1,5 +1,5 @@
 <div class="flex gap-4 overflow-x-auto pb-4">
-  <% Book::STATUSES.each do |status| %>
+  <% Book.statuses.keys.each do |status| %>
     <div data-testid="pipeline-status-<%= status %>" class="bg-gray-50 rounded-lg p-4 min-w-[280px] flex-shrink-0">
       <div class="flex justify-between items-center mb-4">
         <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide"><%= status.humanize %></h3>
